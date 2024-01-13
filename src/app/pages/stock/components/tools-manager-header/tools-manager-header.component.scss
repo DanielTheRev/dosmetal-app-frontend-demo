@@ -1,0 +1,51 @@
+:host {
+  position: sticky;
+  top: 0px;
+  display: flex;
+  width: 100%;
+  z-index: 2;
+  padding-bottom: 0.5rem;
+}
+
+header {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+
+  .title {
+    font-size: 25px;
+    color: #fff;
+    padding: 0.4rem 0px;
+  }
+  // .controls {
+  //   position: relative;
+  //   display: flex;
+  //   .input-finder {
+  //     position: relative;
+  //     flex-grow: 1;
+  //     .icon {
+  //       position: absolute;
+  //       width: 30px;
+  //       height: 100%;
+  //       left: 0px;
+  //       top: 0px;
+  //       display: flex;
+  //       justify-content: center;
+  //       align-items: center;
+  //     }
+  //     .finder {
+  //       padding-left: 30px !important;
+  //       &:focus {
+  //         .input-finder > .icon {
+  //           color: red !important;
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
+  @media (max-width: 576px) {
+    .title {
+      font-size: 16px;
+    }
+  }
+}

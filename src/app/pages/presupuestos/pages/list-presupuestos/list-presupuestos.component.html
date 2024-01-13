@@ -1,0 +1,24 @@
+<header>
+  <div class="title">Presupuestos</div>
+  <div class="control-bar">
+    <div class="btn btn-primary btn-sm" (click)="addPresupuesto()">
+      Nuevo presupuesto
+    </div>
+    <div class="input-finder">
+      <div class="icon">
+        <i class="fas fa-search text-secondary"></i>
+      </div>
+      <input
+        type="text"
+        class="form-control form-control-sm finder"
+        placeholder="Buscar"
+        #term
+        (input)="findPresupuesto(term.value.toLowerCase().trim())"
+      />
+    </div>
+  </div>
+</header>
+
+<div class="table-container">
+  <app-presupuesto-table-list [presupuestos]="PresupuestosFiltered"></app-presupuesto-table-list>
+</div>

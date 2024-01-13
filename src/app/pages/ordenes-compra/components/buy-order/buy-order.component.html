@@ -1,0 +1,59 @@
+<div class="document-wrapper">
+  <div class="document" #ordenDeCompra>
+    <div class="page" *ngFor="let page of Pages">
+      <div class="logo" *ngIf="page.pageNumber === 1">
+        <img src="assets/logo3.png" alt="" />
+      </div>
+      <div class="header" *ngIf="page.pageNumber === 1">
+        <div class="title">ORDEN DE COMPRA</div>
+        <div class="EmpresaData">
+          <div class="data">
+            Nombre de la Empresa:
+            <span class="value">{{ BuyOrder.CompanyName }}</span>
+          </div>
+          <div class="data">
+            Fecha:
+            <span class="value">{{ BuyOrder.Date | date : "d-MM-YYYY" }}</span>
+          </div>
+          <div class="data">
+            No. Orden: <span class="value">{{ BuyOrder.OrderNo }}</span>
+          </div>
+        </div>
+        <h6 class="p-1 mb-0 mx-auto my-2">Enviar a:</h6>
+        <div class="sendTo">
+          <div class="data">
+            Nombre del cliente:
+            <span class="value">{{ BuyOrder.OrderTo.ClientName }}</span>
+          </div>
+          <div class="data">
+            Dirección:
+            <span class="value">{{ BuyOrder.OrderTo.Adress }}</span>
+          </div>
+          <div class="data">
+            Teléfono:
+            <span class="value">{{ BuyOrder.OrderTo.Telephone }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="items">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Descripción</th>
+              <th scope="col">Cantidad</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let producto of page.pageData; index as i">
+              <td>{{ producto.Product }}</td>
+              <td>{{ producto.Amount }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="firma" *ngIf="page.showFooter">
+        <div class="data">Firma <span class="sign"></span></div>
+      </div>
+    </div>
+  </div>
+</div>

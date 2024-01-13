@@ -1,0 +1,135 @@
+<div class="wrapper animate__animated animate__slideInLeft">
+  <div class="title">
+    <button
+      class="btn btn-success btn-sm"
+      id="go-back"
+      (click)="goToPreviusPage()"
+    >
+      <i class="fas fa-chevron-left"></i> volver
+    </button>
+    Crear orden de compra
+  </div>
+
+  <div class="retiro-form-container">
+    <form
+      [formGroup]="formData"
+      class="needs-validation"
+      autocomplete="off"
+      (ngSubmit)="saveData()"
+    >
+      <div class="retiro-wrapper">
+        <div class="retiro-datos">
+          <h5>1. Datos del retiro</h5>
+          <div>
+            <label class="form-label">Nombre Empresa</label>
+            <input
+              type="text"
+              class="form-control form-control-sm"
+              formControlName="CompanyName"
+            />
+          </div>
+          <h6 class="mb-0 py-2">Datos de quien recibe:</h6>
+          <div class="mb-2" formGroupName="OrderTo">
+            <div class="mb-2">
+              <label class="form-label">Nombre cliente</label>
+              <input
+                type="text"
+                class="form-control form-control-sm"
+                formControlName="ClientName"
+              />
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Dirección</label>
+              <input
+                type="text"
+                class="form-control form-control-sm"
+                formControlName="Adress"
+              />
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Teléfono</label>
+              <input
+                type="text"
+                class="form-control form-control-sm"
+                formControlName="Telephone"
+              />
+            </div>
+            <div class="alert bg-info text-center fs-6">
+              Deslize para agregar productos
+            </div>
+          </div>
+        </div>
+
+        <div class="retiro-productos">
+          <h5>2. Productos a retirar</h5>
+          <div class="table-container">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col" style="width: 150px">Cantidad</th>
+                  <th scope="col">Descripcion</th>
+                  <th style="width: 36px; height: 36px"></th>
+                </tr>
+              </thead>
+              <tbody formArrayName="Products">
+                <tr
+                  [formGroupName]="i"
+                  *ngFor="let producto of getProductos().controls; index as i"
+                  class="animate__animated animate__fadeIn"
+                  #tableEL
+                >
+                  <td>
+                    <input
+                      type="text"
+                      class="form-control form-control-sm"
+                      formControlName="Amount"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="form-control form-control-sm"
+                      formControlName="Product"
+                    />
+                  </td>
+                  <td>
+                    <div
+                      style="
+                        display: grid;
+                        place-content: center;
+                        width: 36px;
+                        height: 36px;
+                      "
+                      (click)="deleteProducto(i)"
+                    >
+                      <i class="fas fa-trash text-danger fa-lg"></i>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="add-btn">
+            <button
+              type="button"
+              class="btn btn-primary btn-sm"
+              (click)="addProducto()"
+            >
+              Agregar producto
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <button
+          type="submit"
+          class="btn btn-primary btn-sm"
+          [disabled]="formData.invalid"
+        >
+          Guardar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

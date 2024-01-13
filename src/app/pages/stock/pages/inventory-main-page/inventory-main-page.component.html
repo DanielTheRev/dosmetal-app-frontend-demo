@@ -1,0 +1,181 @@
+<nav class="nav-bar">
+  <div
+    class="nav-section user-select-none"
+    *ngFor="let tab of tabs"
+    [ngClass]="{ 'active-tab': activeTab === tab }"
+    (click)="changeCategorie(tab)"
+  >
+    {{ tab }}
+  </div>
+</nav>
+
+<div class="table-data-controls">
+  <div class="input-finder">
+    <div class="icon">
+      <i class="fas fa-search text-secondary"></i>
+    </div>
+    <input
+      type="text"
+      class="form-control form-control-sm finder"
+      placeholder="Buscar codigo, nombre, tipo de empaque, etc.."
+      #inputValue
+      (input)="searchItem(inputValue.value)"
+    />
+  </div>
+  <div class="button-group">
+    <button
+      type="button"
+      class="btn btn-secondary btn-sm position-relative"
+      [ngClass]="{ 'btn-success': cart.length > 0 }"
+      (click)="openCartDialog()"
+    >
+      <i class="fas fa-shopping-cart"></i>
+      Carrito
+      <span
+        class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+        style="z-index: 5;"
+        *ngIf="cart.length > 0"
+      >
+        {{ cart.length }}
+        <span class="visually-hidden">Retiros en el carrito</span>
+      </span>
+    </button>
+
+    <div class="btn-group" id="buttons-excel">
+      <button
+        class="btn btn-secondary btn-sm dropdown-toggle"
+        type="button"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        <i class="fas fa-file-import"></i>
+        Importar/Exportar
+      </button>
+      <ul class="dropdown-menu">
+        <li
+          class="dropdown-item"
+          style="cursor: pointer"
+          (click)="file.click()"
+        >
+          <input type="file" #file hidden (change)="openExcel(file)" />
+          Importar Excel
+        </li>
+        <li class="dropdown-item" style="cursor: pointer">
+          Exportar como Excel
+        </li>
+      </ul>
+    </div>
+
+    <button class="btn btn-primary btn-sm" (click)="addInventory()">
+      <i class="far fa-file"></i>
+      Nuevo
+    </button>
+  </div>
+</div>
+
+<div class="cards-inventory">
+  <div class="card-inventory" *ngFor="let item of InventoryFiltered">
+    <div class="card-inventory-img">
+      <img [src]="item.ImgRef.secure_url" *ngIf="item.ImgRef" loading="lazy"/>
+    </div>
+    <div class="card-inventory-body">
+      <div class="card-inventory-header">
+        <div class="nombre">{{ item.Nombre }}</div>
+        <div class="codigo-estado">
+          <span class="badge bg-secondary">{{ item.Referencia }}</span>
+          <span
+            class="badge"
+            [ngClass]="{
+              'bg-primary': item.InventoryState === 'Stock Suficiente',
+              'bg-warning': item.InventoryState === 'Poco Stock',
+              'bg-danger': item.InventoryState === 'Sin Stock'
+            }"
+          >
+            {{ item.InventoryState }}
+          </span>
+        </div>
+      </div>
+
+      <div class="card-inventory-details">
+        <ul class="list-group user-select-none">
+          <li
+            class="list-group-item text-lowercase p-2"
+            style="min-width: max-content"
+            *ngFor="let inventory of item.Inventario"
+          >
+            <app-inventory-item [inventory]="inventory"></app-inventory-item>
+          </li>
+        </ul>
+      </div>
+
+      <div
+        class="card-inventory-footer"
+        [ngClass]="{
+          'text-primary': item.InventoryState === 'Stock Suficiente',
+          'text-warning': item.InventoryState === 'Poco Stock',
+          'text-danger': item.InventoryState === 'Sin Stock'
+        }"
+      >
+        En total: {{ item.TotalInventario }}
+        {{ item.TotalInventario > 0 ? "unidades" : "unidad" }}
+        <div class="controls">
+          <ul
+            class="list-group list-group-horizontal flex-fill"
+            style="font-size: 0.8rem; width: max-content"
+          >
+            <li
+              class="list-group-item list-group-item-action user-select-none"
+              (click)="addToCart(item)"
+              [ngClass]="{ disabled: item.InventoryState === 'Sin Stock' }"
+              title="Agregar al carrito"
+            >
+              <i class="fas fa-cart-plus"></i>
+            </li>
+
+            <li
+              class="list-group-item list-group-item-action user-select-none"
+              style="padding: 8px"
+              title="Agregar stock"
+              (click)="
+                addInventarioToItem(item.Referencia, item.Nombre, item._id!)
+              "
+            >
+              <i class="fas fa-truck-loading"></i>
+            </li>
+
+            <li
+              class="list-group-item list-group-item-action user-select-none"
+              style="padding: 8px"
+              title="Editar inventario"
+              (click)="addInventory(item._id!)"
+            >
+              <i class="far fa-edit"></i>
+            </li>
+
+            <li
+              class="list-group-item list-group-item-action user-select-none"
+              style="padding: 8px"
+              (click)="openHistoryDialog(item._id!)"
+              title="Abrir historial de cambios"
+            >
+              <i class="fas fa-redo"></i>
+            </li>
+
+            <li
+              class="list-group-item list-group-item-action user-select-none"
+              style="padding: 8px"
+              title="Eliminar este item"
+              (click)="deleteItem(item._id!)"
+            >
+              <i class="fas fa-trash-alt"></i>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="alert alert-info" role="alert" *ngIf="dataStatus === 'Cargando'">
+  Cargando datos
+</div>

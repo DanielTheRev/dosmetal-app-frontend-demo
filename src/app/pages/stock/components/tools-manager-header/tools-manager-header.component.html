@@ -1,0 +1,23 @@
+<header>
+  <div class="title">{{ HeaderTitle }}</div>
+  <div class="control-bar">
+    <button
+      class="btn btn-success btn-sm"
+      *ngIf="HeaderTitle === 'Herramientas disponibles'"
+      (click)="AddNewTool()"
+    >
+      Nueva Herramienta
+    </button>
+    <form [formGroup]="SearchForm" class="input-finder">
+      <div class="icon">
+        <i class="fas fa-search text-secondary"></i>
+      </div>
+      <input
+        type="text"
+        class="form-control form-control-sm finder"
+        placeholder="Buscar"
+        formControlName="keyword"
+      />
+    </form>
+  </div>
+</header>

@@ -1,0 +1,97 @@
+<ng-container *ngIf="HomeBanner; else elseTemplate">
+  <header class="header">
+    <h5 class="m-0">{{ "Banner " + HomeBanner.banner }}</h5>
+  </header>
+
+  <div class="wrapper">
+    <div
+      class="description"
+      [contentEditable]="onEdit"
+      #description
+      [ngClass]="{ 'border border-success bg-success text-white': onEdit }"
+    >
+      {{ HomeBanner.description }}
+    </div>
+
+    <div class="img-list">
+      <div
+        class="img-container"
+        *ngFor="let image of HomeBanner.images"
+        [ngClass]="{ 'no-image': !image.imgRef }"
+      >
+        <img [src]="image.imgRef.secure_url" *ngIf="image.imgRef" />
+        <input
+          type="file"
+          hidden
+          #inputFile
+          (change)="loadImage($event, image._id)"
+        />
+        <div class="no-image" *ngIf="!image.imgRef">
+          <span>Sin Imagen</span>
+        </div>
+        <div class="actions animate__animated animate__fadeIn">
+          <button class="btn btn-success btn-sm" (click)="inputFile.click()">
+            Cambiar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <!-- text edit -->
+    <button
+      class="btn btn-sm btn-primary"
+      (click)="setEditMode()"
+      *ngIf="!onEdit"
+    >
+      <i class="fas fa-file-edit text-warning"></i>
+      Editar descripcion
+    </button>
+
+    <button
+      class="btn btn-sm btn-success"
+      (click)="saveDescription(description.textContent!)"
+      *ngIf="onEdit"
+      [disabled]="descriptionSubmitting"
+    >
+      <i class="far fa-save text-white" *ngIf="!descriptionSubmitting"></i>
+      <i
+        class="fas fa-spinner fa-spin text-white"
+        *ngIf="descriptionSubmitting"
+      ></i>
+      Guardar cambios
+    </button>
+    <!-- text edit end -->
+
+    <!-- image edit -->
+    <!-- <input
+      type="file"
+      hidden
+      #inputFiles
+      multiple
+      (change)="loadImage($event)"
+    />
+    <button
+      class="btn btn-sm btn-warning"
+      (click)="inputFiles.click()"
+      *ngIf="files.length <= 0"
+    >
+      <i class="fas fa-image"></i>
+      Cambiar imagen
+    </button> -->
+
+    <!-- <button
+      class="btn btn-sm btn-success"
+      (click)="saveImage()"
+      *ngIf="files.length > 0"
+      [disabled]="fileSubmitting"
+    >
+      <i class="far fa-save text-white" *ngIf="!fileSubmitting"></i>
+      <i class="fas fa-spinner fa-spin text-white" *ngIf="fileSubmitting"></i>
+      Guardar imagen
+    </button> -->
+    <!-- image edit end -->
+  </div>
+</ng-container>
+<ng-template #elseTemplate> </ng-template>

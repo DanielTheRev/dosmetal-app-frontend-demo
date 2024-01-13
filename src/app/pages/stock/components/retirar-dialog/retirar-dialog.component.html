@@ -1,0 +1,56 @@
+<h4 matDialogTitle class="m-0 text-center">
+  Retirar stock
+  <div class="badge bg-primary mb-1 fw-normal d-block text-wrap">{{ data.Nombre }}</div>
+</h4>
+
+<hr class="mt-0" />
+<form [formGroup]="formData" (ngSubmit)="save()">
+  <mat-dialog-content class="mat-typography pb-1">
+    <div class="mb-3 text-center text-success fs-6">
+      Hay disponible {{ data.TotalInventario }} unidades
+    </div>
+
+    <!-- Cuantas unidades se lleva -->
+    <div class="mb-3 animate__animated animate__fadeInDown">
+      <label class="form-label">¿Cuantas unidades va llevarse?</label>
+      <input
+        type="number"
+        class="form-control form-control-sm"
+        [ngClass]="{
+          'is-invalid':
+            getControl('cantidadQueRetira').touched &&
+            getControl('cantidadQueRetira').invalid
+        }"
+        formControlName="cantidadQueRetira"
+      />
+      <div
+        class="invalid-feedback animate__animated animate__fadeIn"
+        *ngIf="
+          getControl('cantidadQueRetira').touched &&
+          getControl('cantidadQueRetira').invalid
+        "
+      >
+        <ng-container *ngIf="getControl('cantidadQueRetira').value <= 0">
+          El retiro tiene que ser mayor a 0
+        </ng-container>
+
+        <ng-container
+          *ngIf="getControl('cantidadQueRetira').value > data.TotalInventario"
+        >
+          No hay suficiente stock para llevar esa cantidad
+        </ng-container>
+      </div>
+    </div>
+    <!-- Cuantas unidades se lleva -->
+
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button type="button" class="btn btn-light btn-sm mx-1" matDialogClose>
+      cancelar
+    </button>
+    <button type="submit" class="btn btn-primary btn-sm text-center" [disabled]="formData.invalid">
+      <i class="fas fa-cart-plus"></i>
+      Al Carrito
+    </button>
+  </mat-dialog-actions>
+</form>

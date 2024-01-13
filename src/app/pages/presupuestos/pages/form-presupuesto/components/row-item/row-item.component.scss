@@ -1,0 +1,41 @@
+:host {
+  display: block;
+  width: 100%;
+};
+
+td {
+  .descripcion,
+  .precio {
+    display: flex;
+    width: 100%;
+    min-height: 100%;
+    font-size: 15px;
+    border: 2px solid var(--bs-gray-400);
+    border-radius: 3px;
+    outline: none;
+    align-items: center;
+    padding: 0px 0.2rem;
+    &:hover {
+      border-color: var(--bs-warning);
+    }
+    &:focus {
+      border-color: var(--bs-primary);
+    }
+  }
+  .descripcion {
+    word-wrap: break-word;
+    word-break: break-all;
+  }
+  .precio {
+    min-height: 40px;
+    max-height: 80px;
+  }
+  .delete-icon {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    color: var(--bs-danger);
+  }
+}

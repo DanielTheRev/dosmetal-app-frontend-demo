@@ -1,0 +1,210 @@
+<form class="form-wrapper" [formGroup]="form">
+  <aside>
+    <div class="client-data">
+      <div class="client-name-obra">
+        {{ Presupuesto.Cliente.nombre }}
+      </div>
+      <div class="obra-title-num">
+        <div class="PresupuestoNum">
+          Presupuesto Nro: {{ Presupuesto.PresupuestoNum }}
+        </div>
+      </div>
+    </div>
+
+    <div class="obra-data" data-bs-theme="dark">
+      <div class="inputs">
+        <label for="obra" class="form-label">Titulo de la Obra</label>
+        <input
+          type="text"
+          class="form-control form-control-sm"
+          id="obra"
+          formControlName="Obra"
+        />
+      </div>
+      <div class="inputs">
+        <label class="form-label"> Entrega </label>
+        <input
+          type="text"
+          class="form-control form-control-sm"
+          formControlName="LugarDeEntrega"
+        />
+      </div>
+      <div class="inputs multiple">
+        <div class="inputs">
+          <label class="form-label"> IVA </label>
+          <select
+            class="form-select form-select-sm"
+            #iva
+            formControlName="IvaIncluido"
+            (input)="quitarIva(iva.value)"
+          >
+            <option value="Incluido">INCLUIDO</option>
+            <option value="No incluido">NO INCLUIDO</option>
+          </select>
+        </div>
+        <div class="inputs">
+          <label class="form-label"> Tipo </label>
+          <select
+            class="form-select form-select-sm"
+            #tipoPresupuesto
+            (input)="CambiarTipoPresupuesto(tipoPresupuesto.value)"
+            formControlName="TipoPresupuesto"
+          >
+            <option value="Cerrado">CERRADO</option>
+            <option value="Abierto">ABIERTO</option>
+          </select>
+        </div>
+      </div>
+      <div class="inputs">
+        <label class="form-label"> Forma de pago </label>
+        <input
+          type="text"
+          class="form-control form-control-sm"
+          formControlName="FormaDePago"
+        />
+      </div>
+
+      <div class="inputs">
+        <label class="form-label"> Plazo de entrega </label>
+        <input
+          type="text"
+          class="form-control form-control-sm"
+          formControlName="PlazoDeEntrega"
+        />
+      </div>
+
+      <div class="inputs">
+        <label class="form-label"> Validez Oferta </label>
+        <input
+          type="text"
+          class="form-control form-control-sm"
+          formControlName="ValidezDeOferta"
+        />
+      </div>
+    </div>
+    <div
+      class="set-price"
+      *ngIf="form.controls['TipoPresupuesto'].value === 'Cerrado'"
+    >
+      <label for="" class="form-label">Costo de la obra</label>
+      <input
+        type="text"
+        class="form-control form-control-sm"
+        #setPrice
+        autocomplete="off"
+        (input)="setTotalPrice(setPrice.value, setPrice)"
+      />
+    </div>
+    <button class="btn btn-success btn-sm" (click)="SaveDocument()">
+      Guardar
+    </button>
+  </aside>
+  <div class="table-wrapper">
+    <div class="count">
+      <div class="sub-total">
+        Subtotal:
+        <span
+          >${{
+            Presupuesto.SubTotal.toLocaleString("es-AR", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+            })
+          }}
+        </span>
+      </div>
+      <div class="IVA">
+        IVA 21%:
+        <span
+          >${{
+            Presupuesto.IVA21.toLocaleString("es-AR", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+            })
+          }}
+        </span>
+      </div>
+      <div class="total">
+        Total:
+        <span
+          >${{
+            Presupuesto.Total.toLocaleString("es-AR", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+            })
+          }}</span
+        >
+      </div>
+    </div>
+    <div class="items-list">
+      <table class="table table-dark">
+        <thead>
+          <tr>
+            <td scope="col" style="width: 50px; text-align: center">Item</td>
+            <td scope="col">Descripcion</td>
+            <td
+              scope="col"
+              *ngIf="form.controls['TipoPresupuesto'].value === 'Abierto'"
+              style="width: 114px"
+            >
+              Precio
+            </td>
+            <td scope="col" style="width: 35px; height: 35px"></td>
+          </tr>
+        </thead>
+        <tbody formArrayName="Items">
+          <tr
+            *ngFor="let control of getItems().controls; index as i"
+            #item
+            [id]="i"
+            [formGroupName]="i"
+          >
+            <td>
+              {{ i + 1 }}
+            </td>
+            <td>
+              <div
+                #descripcion
+                [innerText]="initValue(i)"
+                class="descripcion"
+                [contentEditable]="true"
+                (input)="setItemDescription(i, descripcion.innerText!)"
+              ></div>
+            </td>
+            <td
+              *ngIf="form.controls['TipoPresupuesto'].value === 'Abierto'"
+              style="width: 114px"
+            >
+              <input
+                type="text"
+                class="precio"
+                data-bs-theme="dark"
+                #inputEl
+                (input)="InputPrecioChanges(i, inputEl.value)"
+                formControlName="Precio"
+              />
+            </td>
+            <td style="width: 35px; height: 50px">
+              <div class="delete-icon">
+                <i class="fas fa-trash-alt fa-lg" (click)="deleteItem(i)"></i>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <button class="btn btn-success btn-sm" (click)="addItem()">
+        Agregar
+      </button>
+    </div>
+    <div class="footer">
+      <div class="nota alert alert-warning m-0" data-bs-theme="dark">
+        Nota:
+        <textarea
+          class="form-control"
+          #nota
+          type="text"
+          formControlName="Nota"
+        ></textarea>
+      </div>
+    </div>
+  </div>
+</form>

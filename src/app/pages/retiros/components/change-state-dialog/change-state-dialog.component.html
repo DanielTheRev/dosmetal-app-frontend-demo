@@ -1,0 +1,22 @@
+<h2 mat-dialog-title class="m-0">Informar Estado</h2>
+<hr class="mt-1" />
+
+<mat-dialog-content class="mat-typography">
+  <div class="mb-2">
+    <label class="form-label">Informe</label>
+    <input type="text" class="form-control" #eventString />
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button type="button" class="btn btn-light mx-1" mat-dialog-close>
+    cancelar
+  </button>
+  <button
+    type="submit"
+    class="btn btn-primary"
+    (click)="save(eventString.value)"
+    [disabled]="eventString.value.length <= 0"
+  >
+    Guardar
+  </button>
+</mat-dialog-actions>

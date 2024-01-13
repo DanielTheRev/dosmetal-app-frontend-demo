@@ -1,0 +1,200 @@
+:host {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  gap: 0.2rem;
+  background: #333;
+  overflow: auto;
+}
+
+.form-wrapper {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  @media (max-width: 768px) {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    aside,
+    .table-wrapper {
+      min-width: 100%;
+      scroll-snap-align: center;
+    }
+    .table-wrapper {
+      .items-list {
+        .table {
+          min-width: 100%;
+        }
+      }
+    }
+  }
+  aside {
+    position: relative;
+    display: flex;
+    width: 100%;
+    max-width: 300px;
+    height: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+    background: #444;
+    color: var(--bs-gray-400);
+    padding: 1rem;
+    .client-data {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      padding: 0.5rem 0.2rem;
+      .client-name-obra {
+        display: flex;
+        font-size: 1.8rem;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      .obra-title-num {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        .PresupuestoNum {
+          display: flex;
+          color: #fff;
+          background-color: var(--bs-blue);
+          padding: 0.2rem 0.5rem;
+        }
+      }
+    }
+    .obra-data {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+      .inputs {
+        width: 100%;
+        &.multiple {
+          display: flex;
+          gap: 0.2rem;
+        }
+      }
+    }
+
+    .set-price {
+      width: 100%;
+      border: 2px solid var(--bs-warning);
+      border-radius: 5px;
+      padding: 0.2rem;
+      > #set-price {
+        display: block;
+        border: none;
+        background-color: transparent;
+        flex-grow: 1;
+        border-bottom: 2px solid var(--bs-gray-600);
+        outline: none;
+        &:hover {
+          border-bottom-color: var(--bs-success);
+        }
+        &:focus {
+          border-bottom-color: var(--bs-warning);
+        }
+      }
+    }
+  }
+  .table-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    .count {
+      display: flex;
+      gap: 0.2rem;
+      background-color: var(--bs-warning);
+      padding: 0.2rem;
+      font-size: 1rem;
+      justify-content: center;
+      align-items: center;
+      & > div {
+        color: #333;
+        padding: 0px 0.5rem;
+      }
+    }
+    .items-list {
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      width: 100%;
+      height: 100%;
+      table {
+        min-width: 841px;
+        max-height: 100%;
+        thead {
+          position: sticky;
+          top: 0;
+          z-index: 1;
+          background-color: var(--bs-gray-300);
+        }
+        tbody tr {
+          background-color: #ffff;
+        }
+        tbody tr td {
+          .descripcion,
+          .precio {
+            display: flex;
+            width: 100%;
+            min-height: 100%;
+            font-size: 1rem;
+            border: 2px solid var(--bs-gray-400);
+            border-radius: 3px;
+            outline: none;
+            align-items: center;
+            padding-left: 0.5rem !important;
+            color: var(--bs-gray-400);
+            &:hover {
+              border-color: var(--bs-warning);
+            }
+            &:focus {
+              border-color: var(--bs-primary);
+            }
+          }
+          .descripcion {
+            display: inline-block;
+            min-height: 35px !important;
+            padding: 0px;
+          }
+          .precio {
+            min-height: 30px;
+            max-height: 80px;
+          }
+          .delete-icon {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+            color: var(--bs-danger);
+          }
+        }
+      }
+      > button.btn {
+        position: sticky;
+        bottom: 0px;
+        align-self: center;
+      }
+    }
+    .footer {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      .nota {
+        width: 100%;
+      }
+    }
+  }
+}

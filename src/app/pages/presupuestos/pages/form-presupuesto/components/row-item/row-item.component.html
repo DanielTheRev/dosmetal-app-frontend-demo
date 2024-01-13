@@ -1,0 +1,35 @@
+<td>
+  {{ data.idx + 1 }}
+</td>
+<td style="height: 50px">
+  <div
+    class="descripcion"
+    #descripcion
+    contenteditable="true"
+    (input)="value.emit({ idx: data.idx, value: descripcion.innerText! })"
+  ></div>
+</td>
+<td>
+  <div
+    class="precio"
+    contenteditable="true"
+    #precio
+    (input)="
+      value.emit({
+        idx: data.idx,
+        value: precio.innerText!,
+        target: 'precio'
+      })
+    "
+  >
+    1
+  </div>
+</td>
+<td style="width: 35px; height: 50px">
+  <div class="delete-icon">
+    <i
+      class="fas fa-trash-alt fa-lg"
+      (click)="delete.emit({ id: data.idx })"
+    ></i>
+  </div>
+</td>

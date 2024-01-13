@@ -1,0 +1,41 @@
+<header class="header" *ngIf="BuyOrder">
+  <button
+    class="btn btn-secondary btn-sm"
+    id="go-back"
+    (click)="goToPreviusPage()"
+  >
+    <i class="fas fa-chevron-left"></i> volver
+  </button>
+  <div class="title">
+    Orden de compra {{ BuyOrder.OrderNo }}
+    {{ BuyOrder.OrderTo.ClientName }}
+  </div>
+  <div class="buttons">
+    <button
+      class="btn btn-outline-primary btn-sm"
+      id="save-pdf"
+      (click)="showPrintableElement('Download')"
+    >
+      Guardar PDF
+    </button>
+    <button
+      class="btn btn-outline-success btn-sm"
+      id="btn-print"
+      (click)="showPrintableElement('Print')"
+    >
+      Imprimir
+    </button>
+  </div>
+</header>
+
+<div class="wrapper">
+  <app-buy-order
+    #ordenDeCompra
+    [Order]="BuyOrder"
+    *ngIf="BuyOrder"
+  ></app-buy-order>
+
+  <div class="pdf-view" id="pdf-view" *ngIf="objURL">
+    <embed type="application/pdf" #pdfView [src]="objURL" />
+  </div>
+</div>

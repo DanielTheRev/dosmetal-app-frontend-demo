@@ -1,0 +1,46 @@
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Nombre</th>
+        <th>Cuit</th>
+        <th>Email</th>
+        <th>Telefono</th>
+        <th>Cant. presupuestos</th>
+        <th style="width: 100px"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let client of Clientes; index as i">
+        <td>{{ i + 1 }}</td>
+        <td (click)="goToClient(client._id!)">{{ client.nombre }}</td>
+        <td>{{ client.cuit }}</td>
+        <td>{{ client.email }}</td>
+        <td>{{ client.telefono }}</td>
+        <td>
+          {{
+            client.presupuestos.length > 0
+              ? client.presupuestos.length
+              : "Ningun"
+          }}
+          {{ client.presupuestos.length > 1 ? "presupuestos" : "presupuesto" }}
+        </td>
+        <td>
+          <div class="icons">
+            <i
+              class="fas fa-user-edit text-secondary"
+              title="Editar datos cliente"
+              (click)="editClient(client)"
+            ></i>
+            <i
+              class="fas fa-trash-alt text-danger"
+              (click)="deleteClient(client._id!)"
+              title="Eliminar cliente"
+            ></i>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

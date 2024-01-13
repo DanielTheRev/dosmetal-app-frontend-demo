@@ -1,0 +1,175 @@
+<header>
+  <button class="btn btn-outline-warning btn-sm" (click)="goBack()">
+    <i class="fas fa-chevron-left"></i>
+    Volver
+  </button>
+  <div class="title">
+    {{ isNewTool ? "Nueva Herramienta" : "Editar Herramienta" }}
+  </div>
+</header>
+
+<div class="form-container" (paste)="loadImage($event)">
+  <form class="form-card" [formGroup]="Form" (ngSubmit)="getFormValues()">
+    <div class="data">
+      <div class="input-container">
+        <label class="form-label">Nombre</label>
+        <input
+          type="text"
+          class="form-control form-control-sm"
+          formControlName="Nombre"
+        />
+      </div>
+      <div class="input-container">
+        <label for="" class="form-label">Marca</label>
+        <input
+          type="text"
+          class="form-control form-control-sm"
+          formControlName="Marca"
+        />
+      </div>
+      <div class="input-container">
+        <label for="fileImg" class="form-label">Cargar imagen</label>
+        <input
+          class="form-control form-control-sm"
+          id="fileImg"
+          #inputImg
+          type="file"
+          (change)="handleInputImg($event)"
+        />
+      </div>
+
+      <div class="tool-img">
+        <img
+          [src]="
+            haveImg.exist
+              ? haveImg.link
+              : 'https://eustonclub.com.au/wp-content/plugins/slider/images/slider-icon.png'
+          "
+          alt=""
+          #img
+        />
+      </div>
+    </div>
+
+    <div class="stock">
+      <div class="title">
+        Listado Stock
+        <button class="btn btn-primary btn-sm" (click)="addStock()">
+          Agregar
+        </button>
+      </div>
+      <div class="list" formArrayName="Stock">
+        <div
+          class="stock-card"
+          *ngFor="let control of getStock().controls; index as i"
+          [formGroupName]="i"
+        >
+          <div>
+            <label class="form-label">Estado de la maquina</label>
+            <select class="form-select form-select-sm" formControlName="Estado">
+              <option value="Funcionando">Funcionando</option>
+              <option value="Dañada">Dañada</option>
+            </select>
+          </div>
+          <div>
+            <label class="form-label">Cantidad</label>
+            <input
+              type="number"
+              class="form-control form-control-sm"
+              formControlName="Cantidad"
+              autocomplete="off"
+            />
+          </div>
+          <div>
+            <label class="form-label">Ubicacion</label>
+            <select
+              class="form-select form-select-sm"
+              formControlName="Ubicacion"
+            >
+              <option value="En taller">En taller</option>
+              <option value="En oficina">En oficina</option>
+              <option value="En pvc">En pvc</option>
+              <option value="En obra">En obra</option>
+              <option value="En reparacion">En reparacion</option>
+            </select>
+          </div>
+          <div>
+            <label class="form-label">Fecha de compra?</label>
+            <input
+              type="text"
+              class="form-control form-control-sm"
+              formControlName="Fecha_Compra"
+              autocomplete="off"
+            />
+          </div>
+        </div>
+        <!-- <table class="table table-warning table-striped table-borderless">
+          <thead style="border-bottom: 2px solid var(--bs-primary)">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Fecha compra</th>
+              <th scope="col">Cantidad</th>
+              <th scope="col">Estado</th>
+              <th scope="col">Ubicacion</th>
+            </tr>
+          </thead>
+          <tbody formArrayName="Stock">
+            <tr
+              *ngFor="let control of getStock().controls; index as i"
+              [formGroupName]="i"
+            >
+              <th scope="row">{{ i + 1 }}</th>
+              <td>
+                <input
+                  type="text"
+                  class="form-control form-control-sm"
+                  formControlName="Fecha_Compra"
+                  autocomplete="off"
+                />
+              </td>
+              <td>
+                <input
+                  type="number"
+                  class="form-control form-control-sm"
+                  formControlName="Cantidad"
+                  autocomplete="off"
+                />
+              </td>
+              <td>
+                <select
+                  class="form-select form-select-sm"
+                  formControlName="Estado"
+                >
+                  <option value="Funcionando">Funcionando</option>
+                  <option value="Dañada">Dañada</option>
+                </select>
+              </td>
+              <td>
+                <select
+                  class="form-select form-select-sm"
+                  formControlName="Ubicacion"
+                >
+                  <option value="En taller">En taller</option>
+                  <option value="En oficina">En oficina</option>
+                  <option value="En pvc">En pvc</option>
+                  <option value="En obra">En obra</option>
+                  <option value="En reparacion">En reparacion</option>
+                </select>
+              </td>
+            </tr>
+          </tbody>
+        </table> -->
+      </div>
+    </div>
+  </form>
+  <div class="footer">
+    <button
+      class="btn btn-success btn-sm"
+      (click)="getFormValues()"
+      [disabled]="Form.invalid || isSubmitting"
+    >
+      <i class="fas fa-spinner fa-spin" *ngIf="isSubmitting"></i>
+      Guardar
+    </button>
+  </div>
+</div>

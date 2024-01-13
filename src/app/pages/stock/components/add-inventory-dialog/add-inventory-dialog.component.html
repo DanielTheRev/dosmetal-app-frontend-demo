@@ -1,0 +1,93 @@
+<header>
+  <button class="btn btn-warning btn-sm" (click)="goBack()">
+    <i class="fas fa-chevron-left"></i> Volver
+  </button>
+  <div class="title">{{ title }}</div>
+</header>
+
+<form
+  class="content"
+  [formGroup]="form"
+  (ngSubmit)="submitData()"
+  (paste)="loadImg($event)"
+  *ngIf="!loading"
+>
+  <div class="data_stock_wrapper">
+    <div class="data">
+      <div class="inputs-container" *ngIf="isNewInventory">
+        <label class="form-label">Categoria</label>
+        <select class="form-select form-select-sm" formControlName="Categoria">
+          <option
+            [value]="categorie"
+            [ngValue]="categorie"
+            *ngFor="let categorie of availableCategories"
+          >
+            {{ categorie.rubro }}
+          </option>
+        </select>
+      </div>
+
+      <div class="inputs-container">
+        <label class="form-label">Nombre</label>
+        <input
+          type="text"
+          class="form-control form-control-sm"
+          formControlName="Nombre"
+        />
+      </div>
+
+      <div class="inputs-container">
+        <label class="form-label">Ubicación</label>
+        <select class="form-select form-select-sm" formControlName="Ubicacion">
+          <option value="Oficina">Oficina</option>
+          <option value="Pañol">Pañol</option>
+          <option value="Cajon cerrado">Cajon cerrado</option>
+        </select>
+      </div>
+
+      <div class="inputs-container">
+        <label class="form-label">Cantidad minima</label>
+        <input
+          type="number"
+          class="form-control form-control-sm"
+          formControlName="Cant_poco_stock"
+        />
+      </div>
+
+      <div class="inputs-container">
+        <label class="form-label">Imagen de referencia</label>
+        <input
+          type="file"
+          class="form-control form-control-sm"
+          (change)="handleInputImg($event)"
+        />
+      </div>
+
+      <div class="caja-imagen">
+        <img
+          #ImgElement
+          [src]="
+            haveImg.exist
+              ? haveImg.link
+              : 'https://eustonclub.com.au/wp-content/plugins/slider/images/slider-icon.png'
+          "
+        />
+      </div>
+    </div>
+    <div class="stock">
+      <app-stock-items-handler
+        (stock)="loadItems($event)"
+        [loadStock]="Stock"
+      ></app-stock-items-handler>
+    </div>
+  </div>
+  <footer>
+    <button
+      class="btn btn-secondary btm-sm"
+      [disabled]="form.invalid"
+      [ngClass]="{ 'btn-success': form.valid }"
+    >
+      Guardar
+    </button>
+  </footer>
+</form>

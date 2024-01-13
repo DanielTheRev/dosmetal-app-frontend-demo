@@ -1,0 +1,55 @@
+<ul class="list-group">
+  <li class="list-group-item">
+    <label for="" class="form-label">Tipo de contenedor</label>
+    <select
+      class="form-select form-select-sm"
+      formControlName="tipo_contenedor"
+    >
+      <option value="Caja">Caja</option>
+      <option value="Bolsa">Bolsa</option>
+      <option value="Rollo">Rollo</option>
+      <option value="Balde">Balde</option>
+      <option value="Unidades sueltas">Unidades sueltas</option>
+    </select>
+  </li>
+  <li class="list-group-item">
+    <label class="form-label">Cantidad de unidades</label>
+    <input
+      type="number"
+      class="form-control form-control-sm"
+      formControlName="unidades_en_contenedor"
+    />
+  </li>
+  <li class="list-group-item">
+    <label class="form-label">Cantidad de contenedores</label>
+    <input
+      type="number"
+      class="form-control form-control-sm"
+      formControlName="cantidad_de_contenedor"
+    />
+  </li>
+  <li class="list-group-item">
+    <label class="form-label">Unidad de medida</label>
+    <select
+      class="form-select form-select-sm"
+      formControlName="unidad_medida"
+    >
+      <option value="unidades">unidades</option>
+      <option value="kg">kg</option>
+      <option value="mts">mts</option>
+    </select>
+  </li>
+  <li
+    class="list-group-item"
+    style="flex-direction: row; justify-content: space-between"
+  >
+    Esta abierto
+    <input
+      class="form-check-input"
+      type="checkbox"
+      id="checkboxNoLabel"
+      aria-label="..."
+      formControlName="esta_abierto"
+    />
+  </li>
+</ul>

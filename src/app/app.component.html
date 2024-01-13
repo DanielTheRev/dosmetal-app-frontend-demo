@@ -1,0 +1,20 @@
+<ng-container *ngIf="GoToHome">
+  <router-outlet></router-outlet>
+</ng-container>
+
+<div
+  class="app-loader animate__animated animate__fadeIn"
+  [style]="{ 'background-image': 'url(assets/home-loader-bg.jpg)' }"
+  *ngIf="!GoToHome"
+  #appLoader
+>
+  <header class="fw-bold">
+    <img src="assets/logo32.png" alt="" />
+  </header>
+  <div
+    class="no-internet animate__animated animate__fadeIn"
+    *ngIf="showErrorMsg"
+  >
+    Parece que hay un problema con la conexion al servidor
+  </div>
+</div>

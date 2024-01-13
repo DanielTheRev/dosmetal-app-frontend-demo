@@ -1,0 +1,32 @@
+@import '../../../../../variables.scss';
+:host{
+  position: relative;
+  display: grid;
+  width: 100%;
+  height: 100%;
+  grid-template-columns: 100%;
+  grid-template-rows: max-content 1fr;
+  gap: 0.5rem;
+  background: $ActivePageBG;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  overflow-y: auto;
+};
+
+header{
+  display: flex;
+  flex-direction: column;
+  .title {
+      flex-grow: 1;
+      padding: 0.3rem 0px;
+      font-style: italic;
+      font-size: 1.5rem;
+  }
+};
+
+.table-wrapper {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+}

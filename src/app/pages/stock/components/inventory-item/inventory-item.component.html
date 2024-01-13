@@ -1,0 +1,56 @@
+<ng-container *ngIf="inventory === null; else elseTemplate">
+  <div class="alert alert-warning">No hay ningun item para mostrar</div>
+</ng-container>
+<ng-template #elseTemplate>
+  <ng-container *ngIf="inventory.tipo_contenedor === 'Caja'">
+    {{ inventory.cantidad_de_contenedor }}
+    {{ inventory.cantidad_de_contenedor > 1 ? "cajas" : "caja" }}
+    <ng-container *ngIf="inventory.cantidad_de_contenedor > 1">
+      {{ inventory.esta_abierto ? "abiertas" : "selladas" }}
+    </ng-container>
+    <ng-container *ngIf="inventory.cantidad_de_contenedor === 1">
+      {{ inventory.esta_abierto ? "abierta" : "sellada" }}
+    </ng-container>
+    con
+    {{ inventory.unidades_en_contenedor }}
+    {{ inventory.unidades_en_contenedor > 1 ? "unidades" : "unidad" }}
+  </ng-container>
+
+  <ng-container *ngIf="inventory.tipo_contenedor === 'Unidades sueltas'">
+    {{ inventory.unidades_en_contenedor }}
+    {{
+      inventory.unidades_en_contenedor > 1
+        ? "unidades sueltas"
+        : "unidad suelta"
+    }}
+  </ng-container>
+
+  <ng-container *ngIf="inventory.tipo_contenedor === 'Bolsa'">
+    {{ inventory.cantidad_de_contenedor }}
+    {{ inventory.cantidad_de_contenedor > 1 ? "bolsas" : "bolsa" }}
+    <ng-container *ngIf="inventory.cantidad_de_contenedor > 1">
+      {{ inventory.esta_abierto ? "abiertas" : "selladas" }}
+    </ng-container>
+
+    <ng-container *ngIf="inventory.cantidad_de_contenedor === 1">
+      {{ inventory.esta_abierto ? "abierta" : "sellada" }}
+    </ng-container>
+
+    con
+    {{ inventory.unidades_en_contenedor }}
+    {{ inventory.unidades_en_contenedor > 1 ? "unidades" : "unidad" }}
+  </ng-container>
+
+  <ng-container *ngIf="inventory.tipo_contenedor === 'Rollo'">
+    {{ inventory.cantidad_de_contenedor }}
+    {{ inventory.cantidad_de_contenedor > 1 ? "rollos" : "rollo" }}
+    <ng-container *ngIf="inventory.cantidad_de_contenedor > 1">
+      {{ inventory.esta_abierto ? "abierto" : "sellado" }}
+    </ng-container>
+
+    <ng-container *ngIf="inventory.cantidad_de_contenedor === 1">
+      {{ inventory.esta_abierto ? "abierto" : "sellado" }}
+    </ng-container>
+    {{ inventory.unidades_en_contenedor }} con {{ inventory.unidad_medida }}
+  </ng-container>
+</ng-template>

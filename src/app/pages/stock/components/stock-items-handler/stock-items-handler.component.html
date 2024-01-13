@@ -1,0 +1,163 @@
+<form [formGroup]="Items">
+  <header>
+    <div class="title">Listado de stock</div>
+    <div class="dropdown">
+      <button
+        class="btn btn-secondary dropdown-toggle btn-sm"
+        type="button"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        Agregar
+      </button>
+      <ul class="dropdown-menu">
+        <li
+          class="dropdown-item user-select-none"
+          (click)="addInventario('Caja')"
+        >
+          Caja
+        </li>
+        <li
+          class="dropdown-item user-select-none"
+          (click)="addInventario('Unidades sueltas')"
+        >
+          Unidades sueltas
+        </li>
+        <li
+          class="dropdown-item user-select-none"
+          (click)="addInventario('Bolsa')"
+        >
+          Bolsa
+        </li>
+        <li
+          class="dropdown-item user-select-none"
+          (click)="addInventario('Rollo')"
+        >
+          Rollo
+        </li>
+        <li
+          class="dropdown-item user-select-none"
+          (click)="addInventario('Balde')"
+        >
+          Balde
+        </li>
+      </ul>
+    </div>
+  </header>
+  <div class="stock-list" formArrayName="newStock">
+    <div
+      class="stock-item border border-3"
+      *ngFor="let control of getInventario().controls; let i = index"
+      [formGroupName]="i"
+      [ngClass]="{
+        'border-danger': getInvalidField(i),
+        'border-success': getValidField(i)
+      }"
+    >
+      <div class="delete-icon">
+        <i class="fas fa-trash" (click)="deleteInventario(i)"></i>
+      </div>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <label for="" class="form-label">Tipo de contenedor</label>
+          <div
+            class="form-control form-control-sm"
+            #tipo_contenedor
+            style="user-select: none"
+          >
+            {{ getInventarioValue(i).tipo_contenedor }}
+          </div>
+        </li>
+        <li class="list-group-item">
+          <label class="form-label">Cantidad de unidades</label>
+          <input
+            type="number"
+            class="form-control form-control-sm"
+            formControlName="unidades_en_contenedor"
+          />
+        </li>
+        <li
+          class="list-group-item"
+          *ngIf="getInventarioValue(i).tipo_contenedor !== 'Unidades sueltas'"
+        >
+          <label class="form-label">Cantidad de contenedores</label>
+          <input
+            type="number"
+            class="form-control form-control-sm"
+            formControlName="cantidad_de_contenedor"
+          />
+        </li>
+        <li
+          class="list-group-item"
+          *ngIf="getInventarioValue(i).tipo_contenedor !== 'Unidades sueltas'"
+        >
+          <label class="form-label">Unidad de medida</label>
+          <select
+            class="form-select form-select-sm"
+            formControlName="unidad_medida"
+          >
+            <option value="unidades">unidades</option>
+            <option value="kg">kg</option>
+            <option value="mts">mts</option>
+          </select>
+        </li>
+        <li
+          class="list-group-item"
+          style="flex-direction: row; justify-content: space-between"
+          *ngIf="getInventarioValue(i).tipo_contenedor !== 'Unidades sueltas'"
+        >
+          Esta abierto
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="checkboxNoLabel"
+            aria-label="..."
+            formControlName="esta_abierto"
+          />
+        </li>
+      </ul>
+    </div>
+    <!-- 
+    <div class="stock-item-button-add">
+      <i class="fas fa-plus" (click)="options.style.display = 'block'"></i>
+      <ul class="list-group" #options>
+        <li
+          class="list-group-item"
+          (click)="addInventario('Caja')"
+          (click)="options.style.display = 'none'"
+        >
+          Caja
+        </li>
+        <li
+          class="list-group-item"
+          (click)="addInventario('Bolsa')"
+          (click)="options.style.display = 'none'"
+        >
+          Bolsa
+        </li>
+        <li
+          class="list-group-item"
+          (click)="addInventario('Rollo')"
+          (click)="options.style.display = 'none'"
+        >
+          Rollo
+        </li>
+        <li
+          class="list-group-item"
+          (click)="addInventario('Balde')"
+          (click)="options.style.display = 'none'"
+        >
+          Balde
+        </li>
+        <li
+          class="list-group-item"
+          (click)="addInventario('Unidades sueltas')"
+          (click)="options.style.display = 'none'"
+        >
+          Unidades sueltas
+        </li>
+      </ul>
+    </div>
+     -->
+  </div>
+</form>

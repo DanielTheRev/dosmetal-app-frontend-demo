@@ -1,0 +1,58 @@
+<header class="header">
+  <div class="title">Ordenes de compra</div>
+  <div class="controls">
+    <div class="wrapper">
+      <button class="btn btn-primary btn-sm" (click)="createOrder()">
+        Nueva compra
+      </button>
+      <div class="input-finder">
+        <div class="icon">
+          <i class="fas fa-search text-secondary"></i>
+        </div>
+        <input
+          type="search"
+          class="form-control form-control-sm finder"
+          placeholder="Buscar"
+          #word
+          (keyup)="searchBuyOrder(word)"
+        />
+      </div>
+    </div>
+  </div>
+</header>
+<div class="table-container">
+  <div
+    class="alert alert-primary text-center m-1"
+    role="alert"
+    *ngIf="BuyOrdersFiltered.isEmpty"
+  >
+    No hay ordenes para mostrar
+  </div>
+  <table *ngIf="!BuyOrdersFiltered.isEmpty">
+    <thead>
+      <tr>
+        <th scope="col">Orden para</th>
+        <th scope="col">Fecha</th>
+        <th scope="col">Numero de orden</th>
+        <th scope="col">Envio para</th>
+        <th style="width: 35px; height: 35px"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let BuyOrder of BuyOrdersFiltered.data">
+        <td scope="row" (click)="goToBuyOrder(BuyOrder._id!)">
+          {{ BuyOrder.CompanyName }}
+        </td>
+        <th>{{ BuyOrder.Date | date: "d-MM-YYYY" }}</th>
+        <td>{{ BuyOrder.OrderNo }}</td>
+        <td>{{ BuyOrder.OrderTo.ClientName }}</td>
+        <td
+          style="width: 35px; height: 35px"
+          (click)="deleteBuyOrder(BuyOrder._id!)"
+        >
+          <i class="fas fa-trash-alt fa-lg text-danger"></i>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

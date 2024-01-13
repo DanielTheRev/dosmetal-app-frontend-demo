@@ -1,0 +1,17 @@
+<app-preview-presupuesto
+  #Pdf
+  (PrintDocument)="showPrintableElement($event)"
+></app-preview-presupuesto>
+
+<div class="pdf-view" id="pdf-view" *ngIf="objUrl">
+  <header>
+    <button class="btn btn-outline-secondary btn-sm" (click)="showPresupuesto()">
+      <i class="fas fa-chevron-left"></i> volver
+    </button>
+    <div class="title">
+      {{ Pdf.Presupuesto.Cliente.nombre }} Presupuesto Nro:
+      {{ Pdf.Presupuesto.PresupuestoNum }}
+    </div>
+  </header>
+  <embed type="application/pdf" #pdfView [src]="objUrl" />
+</div>

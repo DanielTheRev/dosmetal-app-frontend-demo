@@ -1,0 +1,153 @@
+<div
+  class="wrapper"
+  [ngClass]="{ activePrint: generatingPDF }"
+  *ngIf="!generatingPDF"
+>
+  <div class="header">
+    <div class="title">
+      <h4 class="m-0">Reporte de inventario</h4>
+      <div class="options">
+        <button
+          class="btn btn-outline-success btn-sm btn-print"
+          (click)="imprimir('print')"
+          *ngIf="!generatingPDF"
+        >
+          Imprimir | Descargar
+        </button>
+        <!-- <button
+          class="btn btn-outline-success btn-sm"
+          (click)="imprimir('download')"
+          *ngIf="!generatingPDF"
+        >
+          Descargar
+        </button> -->
+      </div>
+    </div>
+    <div class="tabs">
+      <div
+        class="tab"
+        *ngFor="let tab of tabs; index as i"
+        [ngClass]="{ active: tab.active }"
+        (click)="changeTab(i)"
+      >
+        {{ tab.name }}
+      </div>
+    </div>
+  </div>
+
+  <ng-container *ngFor="let tab of tabs">
+    <div
+      class="report"
+      #report
+      id="report-por-terminarse"
+      *ngIf="tab.active && !PdfURL"
+      [ngClass]="{ 'active-print': generatingPDF }"
+    >
+      <div class="title text-warning border-warning">
+        <h5 class="m-0">{{ tab.name }}</h5>
+      </div>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col" style="max-width: max-content">
+                Img.
+              </th>
+              <th>#</th>
+              <th>Nombre</th>
+              <th>Inventario</th>
+              <th>Total</th>
+              <th>Observaciones</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of tab.data">
+              <td>
+                <div class="item-img">
+                  <img
+                    [src]="item.ImgRef.secure_url"
+                    style="
+                      width: 50px;
+                      height: 50px;
+                      background-color: #fff;
+                      border-radius: 5px;
+                    "
+                    loading="lazy"
+                  />
+                </div>
+              </td>
+
+              <th scope="row">{{ item.Referencia }}</th>
+              <td>{{ item.Nombre }}</td>
+              <td>
+                <ul>
+                  <li *ngFor="let inventario of item.Inventario">
+                    <app-inventory-item
+                      [inventory]="inventario"
+                    ></app-inventory-item>
+                  </li>
+                </ul>
+              </td>
+              <td>{{ item.TotalInventario }}</td>
+              <td>
+                <div class="lowStockInventoryFooter">
+                  <span class="text-danger d-block"
+                    >Se requieren un minimo de
+                    {{ item.Cant_poco_stock }} unidades.</span
+                  >
+                </div>
+              </td>
+              <td>
+                <div class="dropdown" *ngIf="!generatingPDF">
+                  <i
+                    style="font-size: 25px"
+                    class="fas fa-bars text-dark"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  ></i>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <a
+                        class="dropdown-item user-select-none"
+                        (click)="changeMinimumUnits(item._id!)"
+                        >Cambiar unidades minimas</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item user-select-none"
+                        (click)="removeFromList(item._id!, 'lowStock')"
+                        >Eliminar de la lista</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </ng-container>
+
+  <div *ngIf="PdfURL">
+    <embed type="application/pdf" #pdfView [src]="PdfURL" />
+  </div>
+  <div class="printing" *ngIf="generatingPDF">
+    <div
+      class="spinner-border text-success"
+      style="width: 3rem; height: 3rem"
+      role="status"
+    >
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    Preparando archivo...
+  </div>
+</div>
+
+<app-print-page
+  *ngIf="generatingPDF && tabSelected"
+  [Report]="{ name: tabSelected.name, data: tabSelected.data }"
+  (GeneratingPDF)="generatingPDF = $event"
+></app-print-page>

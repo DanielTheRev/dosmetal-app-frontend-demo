@@ -1,0 +1,76 @@
+<ng-container *ngIf="presupuestos">
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th><span>#</span></th>
+          <th><span>Cliente</span></th>
+          <th><span>Obra</span></th>
+          <th><span>Tipo</span></th>
+          <th><span>IVA</span></th>
+          <th><span>Fecha de creación</span></th>
+          <th><span>Estado</span></th>
+          <th style="width: 100px"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let presupuesto of presupuestos">
+          <td>
+            <span class="badge bg-secondary">
+              {{ presupuesto.PresupuestoNum }}
+            </span>
+          </td>
+          <td>{{ presupuesto.Cliente.nombre }}</td>
+          <td (click)="goToPresupuesto(presupuesto._id!)">
+            {{ presupuesto.Obra }}
+          </td>
+          <td>
+            <span
+              class="badge"
+              [ngClass]="{
+                'bg-primary': presupuesto.TipoPresupuesto === 'Abierto',
+                'bg-secondary': presupuesto.TipoPresupuesto === 'Cerrado'
+              }"
+            >
+              {{ presupuesto.TipoPresupuesto }}
+            </span>
+          </td>
+          <td>
+            <span
+              class="badge"
+              [ngClass]="{
+                'bg-secondary text-light': presupuesto.IVA21 <= 0,
+                'bg-warning text-dark': presupuesto.IVA21 > 0
+              }"
+            >
+              {{ presupuesto.IVA21 > 0 ? "Incluido" : "No incluido" }}
+            </span>
+          </td>
+          <td>{{ presupuesto.Fecha | date : "dd-MM-YYYY" }}</td>
+          <td>
+            <div
+              class="badge bg-secondary"
+              [ngClass]="{ 'bg-success': presupuesto.Estado === 'Finalizado' }"
+            >
+              {{ presupuesto.Estado }}
+            </div>
+          </td>
+          <td>
+            <div class="icons">
+              <i
+                class="fas fa-edit text-dark"
+                title="Editar presupuesto"
+                (click)="addPresupuesto(presupuesto._id)"
+              ></i>
+              <i
+                class="fas fa-trash-alt text-danger"
+                title="Eliminar presupuesto"
+                (click)="deletePresupuesto(presupuesto._id!)"
+              ></i>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</ng-container>

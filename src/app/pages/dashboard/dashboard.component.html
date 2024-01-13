@@ -1,0 +1,35 @@
+<aside class="sidebar">
+  <div class="brand">
+    <img
+      src="assets/logo3.png"
+      [routerLink]="['home']"
+      style="cursor: pointer"
+    />
+    Demostración
+  </div>
+  <div class="user-info">
+    {{ userName.Gender === "male" ? "Bienvenido" : "Bienvenida" }},<br />
+    {{ userName.Name }}
+  </div>
+  <nav class="navigation" #burgerMenu>
+    <ul>
+      <li
+        [routerLinkActive]="route.routerLinkActive"
+        *ngFor="let route of routes"
+        [routerLink]="route.routerLink"
+        style="cursor: default"
+      >
+        <div class="icon-container">
+          <i [class]="route.icon"></i>
+        </div>
+        <a>
+          {{ route.name }}
+        </a>
+      </li>
+    </ul>
+  </nav>
+</aside>
+
+<main class="wrapper">
+  <router-outlet></router-outlet>
+</main>

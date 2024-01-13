@@ -1,0 +1,25 @@
+<ng-container *ngIf="Report">
+  <div class="header">
+    <button class="btn btn-secondary btn-sm" (click)="ToggleShowList()">
+      Lista
+    </button>
+    <div class="buttons">
+      <button class="btn btn-primary btn-sm" (click)="Download('Download')">
+        Descargar
+      </button>
+      <button
+        class="btn btn-warning btn-sm"
+        *ngIf="showPrintBtn"
+        (click)="Download('Print')"
+      >
+        Imprimir
+      </button>
+    </div>
+  </div>
+  <div class="wrapper">
+    <app-report [Report]="Report" #ReportComponent></app-report>
+    <div *ngIf="PdfURL" id="pdf-view" class="pdf-view">
+      <embed type="application/pdf" [src]="PdfURL" />
+    </div>
+  </div>
+</ng-container>

@@ -1,0 +1,82 @@
+<form
+  class="add-project-wrap"
+  *ngIf="section"
+  [formGroup]="form"
+  (ngSubmit)="saveProject()"
+>
+  <header>
+    <h5 *ngIf="!project">Agregar obra a {{ section.section }}</h5>
+    <h5 *ngIf="project">{{ project.ProjectTitle }}</h5>
+  </header>
+  <div class="ProjectTitle">
+    <label for="ProjectTitle" class="form-label">Titulo del proyecto</label>
+    <input
+      type="text"
+      name="ProjectTitle"
+      id="ProjectTitle"
+      class="form-control"
+      formControlName="ProjectTitle"
+    />
+  </div>
+  <div class="ProjectDescription">
+    <label for="ProjectDescription" class="form-label"
+      >Descripcion del proyecto</label
+    >
+    <textarea
+      name="ProjectDescription"
+      id="ProjectDescription"
+      class="form-control"
+      formControlName="ProjectDescription"
+      rows="10"
+    ></textarea>
+  </div>
+  <div class="form-check">
+    <input
+      class="form-check-input"
+      type="checkbox"
+      value=""
+      id="flexCheckDefault"
+      formControlName="isLastProject"
+    />
+    <label class="form-check-label" for="flexCheckDefault">
+      Es el ultimo proyecto
+    </label>
+  </div>
+  <div class="files">
+    <label for="files" class="form-label">Cargar fotos del proyecto</label>
+    <input
+      class="form-control"
+      type="file"
+      id="files"
+      multiple
+      (change)="loadImages($event)"
+    />
+  </div>
+  <!-- <div class="images-loader" *ngIf="localImages.length >= 0">
+    <i class="fas fa-spinner fa-spin"></i>
+  </div> -->
+  <div class="images">
+    <div class="img-container" *ngFor="let img of localImages">
+      <img [src]="img.src" loading="lazy" />
+      <button
+        class="btn btn-danger btn-sm"
+        type="button"
+        (click)="deleteImg(img)"
+      >
+        borrar
+      </button>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button
+      class="btn btn-success btn-sm"
+      type="submit"
+      [disabled]="form.invalid || projectSubmitting"
+    >
+      <i class="fas fa-spinner fa-spin" *ngIf="projectSubmitting"></i>
+      <i class="far fa-save" *ngIf="!projectSubmitting"></i>
+      {{ project ? "Guardar cambios" : "Guardar proyecto" }}
+    </button>
+  </div>
+</form>

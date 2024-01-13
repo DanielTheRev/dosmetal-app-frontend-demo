@@ -1,0 +1,139 @@
+<!-- <h2 matDialogTitle>Cargar Stock</h2> -->
+
+<!-- <form [formGroup]="formValues" (ngSubmit)="submitData()" class="text-center">
+  <mat-dialog-content class="mat-typography">
+    <table class="table">
+      <thead>
+        <tr style="font-size: 12px">
+          <th scope="col">#</th>
+          <th scope="col">Tipo Contenedor</th>
+          <th scope="col">Cant. Items en contenedor</th>
+          <th scope="col">Cant. de Contenedores</th>
+          <th scope="col">Uni. Medida</th>
+          <th scope="col">Contenedor Abierto?</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody formArrayName="newStock">
+        <tr
+          [formGroupName]="i"
+          *ngFor="let control of getNewStock().controls; let i = index"
+        >
+          <th scope="row">{{ i + 1 }}</th>
+          <td>
+            <select
+              class="form-select form-select-sm"
+              formControlName="tipo_contenedor"
+            >
+              <option value="Caja">Caja</option>
+              <option value="Bolsa">Bolsa</option>
+              <option value="Rollo">Rollo</option>
+              <option value="Balde">Balde</option>
+              <option value="Unidades sueltas">Unidades sueltas</option>
+            </select>
+          </td>
+          <td>
+            <input
+              type="number"
+              class="form-control form-control-sm"
+              formControlName="unidades_en_contenedor"
+            />
+          </td>
+          <td>
+            <input
+              type="number"
+              class="form-control form-control-sm"
+              formControlName="cantidad_de_contenedor"
+            />
+          </td>
+          <td>
+            <select
+              class="form-select form-select-sm"
+              formControlName="unidad_medida"
+            >
+              <option value="unidades">unidades</option>
+              <option value="kg">kg</option>
+              <option value="mts">mts</option>
+            </select>
+          </td>
+          <td>
+            <div>
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="checkboxNoLabel"
+                aria-label="..."
+                formControlName="esta_abierto"
+              />
+            </div>
+          </td>
+          <td>
+            <button type="button" class="btn btn-danger btn-sm" (click)="removeFormInventario(i)">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </mat-dialog-content>
+  <button
+    class="btn btn-outline-primary btn-sm"
+    (click)="addFormInventario()"
+    [disabled]="submitState === 'submitted'"
+  >
+    Agregar
+  </button>
+  <mat-dialog-actions align="end">
+    <button
+      type="button"
+      class="btn btn-outline-secondary btn-sm"
+      [disabled]="submitState === 'submitted'"
+      mat-dialog-close
+    >
+      cerrar
+    </button>
+    
+    <button
+      type="submit"
+      class="btn mx-1 btn-success btn-sm"
+      [disabled]="submitState === 'submitted' || formValues.invalid"
+    >
+      <i
+        class="fas fa-sync-alt fa-spin"
+        *ngIf="submitState === 'submitted'"
+      ></i>
+      Guardar Cambios
+    </button>
+  </mat-dialog-actions>
+</form> -->
+
+<h2 mat-dialog-title>Cargar Stock</h2>
+<mat-dialog-content class="mat-typography">
+  <app-stock-items-handler
+    (stock)="loadNewItems($event)"
+  ></app-stock-items-handler>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button
+    type="button"
+    class="btn btn-outline-secondary btn-sm"
+    [disabled]="submitState === 'submitted'"
+    mat-dialog-close
+  >
+    cerrar
+  </button>
+  
+  <button
+    type="submit"
+    (click)="submitData()"
+    class="btn mx-1 btn-success btn-sm"
+    [disabled]="submitState === 'submitted' || newStock.length <= 0"
+  >
+    <i
+      class="fas fa-sync-alt fa-spin"
+      *ngIf="submitState === 'submitted'"
+    ></i>
+    Guardar Cambios
+  </button>
+</mat-dialog-actions>

@@ -1,0 +1,65 @@
+<h2 matDialogTitle class="mb-2">
+  {{ data ? "Editar Cliente" : "Nuevo cliente" }}
+</h2>
+<hr class="mt-0" />
+<form [formGroup]="form" (ngSubmit)="save()" autocomplete="off">
+  <mat-dialog-content class="mat-typography">
+    <div class="row">
+      <div class="col-6">
+        <div class="mb-2">
+          <div class="form-label">Nombre:</div>
+          <input
+            type="text"
+            name="nombre"
+            class="form-control form-control-sm"
+            formControlName="nombre"
+          />
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="mb-2">
+          <div class="form-label">Cuit:</div>
+          <input
+            type="text"
+            name="cuit"
+            class="form-control form-control-sm"
+            formControlName="cuit"
+          />
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="mb-2">
+          <div class="form-label">Telefóno:</div>
+          <input
+            type="text"
+            name="telefono"
+            class="form-control form-control-sm"
+            formControlName="telefono"
+          />
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="mb-2">
+          <div class="form-label">Email:</div>
+          <input
+            type="text"
+            name="email"
+            class="form-control form-control-sm"
+            formControlName="email"
+          />
+        </div>
+      </div>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button
+      type="button"
+      class="btn btn-secondary btn-sm mx-1"
+      mat-dialog-close
+    >
+      cancelar
+    </button>
+    <button type="submit" class="btn btn-primary btn-sm">Guardar</button>
+  </mat-dialog-actions>
+</form>

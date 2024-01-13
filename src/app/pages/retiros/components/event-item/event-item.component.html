@@ -1,0 +1,19 @@
+<li
+  class="list-group-item d-flex justify-content-between align-items-start list-group-item-primary"
+>
+  <div class="ms-2 me-auto">
+    <div class="fw-bold">
+     Se retiraron 
+     <span class="text-secondary text-decoration-underline" *ngFor="let e of event.itemsRetirados; index as i">
+      {{ e.retiro }} unidades de {{ e.nombre }} {{ i === event.itemsRetirados.length - 1 ? '' : ';' }}  
+     </span> 
+      para {{ event.nombreQuienRetira }}.
+    </div>
+    <!-- <span class="text-dark">{{ event.estado }}</span> -->
+  </div>
+  <span
+    class="badge bg-primary rounded-pill fw-normal"
+    (click)="informState()"
+    >Informar Devolución</span
+  >
+</li>

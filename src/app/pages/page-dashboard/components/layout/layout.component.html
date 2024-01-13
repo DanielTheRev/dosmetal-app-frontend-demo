@@ -1,0 +1,23 @@
+<!-- <ul class="nav nav-pills">
+  <li class="nav-item" *ngFor="let panel of panels">
+    <a
+      class="nav-link"
+      [routerLink]="panel.routerLink"
+      [routerLinkActive]="panel.routerLinkActive"
+      >{{ panel.title }}</a
+    >
+  </li>
+</ul> -->
+<ul class="navbar">
+  <li
+    class="navbar-item"
+    *ngFor="let panel of panels"
+    [routerLinkActive]="panel.routerLinkActive"
+  >
+    <a class="navbar-link" [routerLink]="panel.routerLink">{{ panel.title }}</a>
+  </li>
+</ul>
+
+<div class="panel-wrap">
+  <router-outlet></router-outlet>
+</div>

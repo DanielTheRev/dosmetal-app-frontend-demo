@@ -1,0 +1,37 @@
+<h5 class="title">Cambiar Fecha de retiro</h5>
+<div class="months">
+  <div class="month" *ngFor="let Month of MonthList">
+    <div class="month_name">
+      {{ FormatDate(Month.timeStamp).format("MMMM - YYYY") | uppercase }}
+    </div>
+    <div class="month_week">
+      <ul class="month_days">
+        <li class="month_day_name">Lun</li>
+        <li class="month_day_name">Mar</li>
+        <li class="month_day_name">Míe</li>
+        <li class="month_day_name">Jue</li>
+        <li class="month_day_name">Vie</li>
+        <li class="month_day_name">Sáb</li>
+        <li class="month_day_name">Dom</li>
+      </ul>
+    </div>
+    <div class="month_days_in">
+      <ul>
+        <li
+          class="month_day_number"
+          *ngFor="let day of Month | transformToCalendar; let i = index"
+          (click)="setDate(day)"
+        >
+          <span
+            class="day_number"
+            [ngClass]="{
+              'user-select-none': day.dayEvents,
+              have_data: day.day && day.dayEvents.length > 0
+            }"
+            >{{ day.day }}</span
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

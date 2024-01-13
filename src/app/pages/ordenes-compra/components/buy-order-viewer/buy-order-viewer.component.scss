@@ -1,0 +1,72 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: #444;
+}
+
+header.header {
+  display: grid;
+  width: 100%;
+  align-items: center;
+  grid-template-columns: max-content 1fr max-content;
+  padding: 0.2rem 1rem;
+  background-color: #555;
+  .title {
+    display: flex;
+    width: 100%;
+    font-size: 1.5rem;
+    justify-content: center;
+    align-items: center;
+    color: #eee;
+    font-weight: bolder !important;
+    padding: 0.2rem 0.5rem;
+    font-style: bold;
+  }
+  .buttons {
+    display: flex;
+    gap: 0.5rem;
+  }
+  button#go-back {
+    margin-right: 0.3rem;
+  }
+  @media (max-width: 768px) {
+    button {
+      font-size: 12px;
+    }
+    button#save-pdf {
+      display: block;
+    }
+    button#btn-print {
+      display: none;
+    }
+    .title {
+      font-size: 14px;
+    }
+  }
+}
+
+.wrapper {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  app-buy-order {
+    min-width: 100%;
+  }
+  .pdf-view {
+    display: flex;
+    min-width: 100%;
+    height: 100%;
+    padding: 0.2rem;
+    overflow: auto;
+    embed {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+

@@ -1,0 +1,33 @@
+<ng-container *ngIf="Cliente !== undefined">
+  <div class="banner">
+    <header>
+      <h2 class="mt-2 text-light fw-bold">{{ Cliente.nombre }}</h2>
+    </header>
+    <ul class="info">
+      <li
+        *ngFor="
+          let obj of Cliente
+            | transformObjArr : '_id' :'nombre': 'presupuestos' : '__v' : 'Obras'
+        "
+      >
+        <span class="key">{{ obj[0] }}:</span>
+        <span class="value">{{ obj[1] }}</span>
+      </li>
+    </ul>
+  </div>
+
+  <main class="content">
+    <div class="presupuestos">
+      <h3>Presupuestos ({{ Cliente.presupuestos.length }})</h3>
+      <div class="presupuestos-list">
+        <app-presupuesto-table-list
+          [presupuestosID]="Cliente.presupuestos"
+        ></app-presupuesto-table-list>
+      </div>
+    </div>
+    <div class="obras-activas">
+      <h3>Obras activas</h3>
+      <div class="obras-list"></div>
+    </div>
+  </main>
+</ng-container>

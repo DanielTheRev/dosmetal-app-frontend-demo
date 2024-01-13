@@ -1,0 +1,35 @@
+<div class="wrapper">
+  <header>
+    Retiros {{ dayJS.format("MMMM YYYY") }}
+    <span class="day animate__animated animate__bounce animate__delay-1s">
+      {{ dayJS.format("LLLL") }}
+    </span>
+    <button
+      class="btn btn-sm mt-1"
+      [ngClass]="{
+        'btn-primary': !onChangeDate,
+        'btn-warning text-white': onChangeDate
+      }"
+      (click)="changeDate()"
+    >
+      {{ onChangeDate ? "Volver" : "Cambiar Fecha" }}
+    </button>
+  </header>
+
+  <ng-container *ngIf="!onChangeDate; else ChangeDateRetiroTemplate">
+    <main class="events p-1" style="overflow: auto">
+      <ul class="list-group">
+        <app-event-item
+          *ngFor="let event of eventsSelected"
+          [event]="event"
+          (UpdateState)="saveState($event)"
+        ></app-event-item>
+      </ul>
+    </main>
+  </ng-container>
+  <ng-template #ChangeDateRetiroTemplate>
+    <app-change-date-retiro
+      (DayToSet)="setDay($event)"
+    ></app-change-date-retiro>
+  </ng-template>
+</div>

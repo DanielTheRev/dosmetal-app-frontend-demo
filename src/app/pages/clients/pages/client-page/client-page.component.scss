@@ -1,0 +1,84 @@
+@import "../../../../../variables";
+
+:host {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+  background: $ActivePageBG;
+  color: #fff;
+  overflow: auto;
+}
+
+.banner {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: #2b32b2;
+  border-radius: 5px 5px 0px 0px;
+  padding: 0.5rem;
+  padding-bottom: 1rem;
+  header {
+    display: flex;
+    width: max-content;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .info {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    font-size: 1rem;
+    gap: 0.5rem;
+    overflow: auto;
+    li {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.5rem;
+      padding: 0px 0.5rem;
+      // border: 2px solid #eee;
+      background-color: #eee;
+      color: #333;
+      border-radius: 5px;
+      .key {
+        text-transform: capitalize;
+      }
+    }
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  margin-top: -15px;
+  background-color: #333;
+  border-radius: 5px;
+  padding: 1rem;
+  gap: 1rem;
+  color: #eee;
+  overflow: auto;
+  .presupuestos,
+  .obras-activas {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    // height: 400px;
+    max-height: 400px;
+    overflow: auto;
+    .presupuestos-list,
+    .obras-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: minmax(max-content, 1fr);
+      overflow-y: auto;
+    }
+  }
+}

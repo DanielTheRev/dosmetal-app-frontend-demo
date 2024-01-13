@@ -1,0 +1,88 @@
+<h4 matDialogTitle class="m-2 text-center">Carrito de Retiros</h4>
+
+<div
+  class="alert alert-warning text-center"
+  role="alert"
+  *ngIf="data.length <= 0"
+>
+  Todavia no hay ningun item agregado al carrito
+</div>
+
+<mat-dialog-content class="mat-typography">
+  <div class="items-list" *ngIf="data.length > 0">
+    <div class="item" *ngFor="let item of data; let i = index">
+      <div class="item-img-reference">
+        <img [src]="item.imgURL.secure_url" *ngIf="item.imgURL" />
+      </div>
+      <div class="item-detail">
+        <div class="item-nombre-referencia">
+          <div>{{ item.nombre }}</div>
+          <div class="text-muted">{{ item.referencia }}</div>
+        </div>
+        <div class="item-cantidad-retiro">
+          {{ item.retiro.cantidadQueRetira }} unidades
+        </div>
+      </div>
+      <div class="item-delete">
+        <button
+          class="btn btn-danger btn-sm"
+          (click)="deleteItemFromCart(item, i)"
+        >
+          <i class="fas fa-trash-alt"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<form
+  [formGroup]="formData"
+  (ngSubmit)="SubmitData()"
+  *ngIf="(data.length > 0 && state === 'waiting') || state === 'submitted'"
+>
+  <!-- Para quien retira -->
+  <div class="mb-3 mt-2 animate__animated animate__fadeInDown">
+    <label class="form-label">¿Para quién es el retiro?</label>
+    <select
+      class="form-select form-select-sm"
+      formControlName="paraQuienRetira"
+    >
+      <option value="Obra">Obra</option>
+      <option value="Empleado">Empleado</option>
+    </select>
+  </div>
+  <!-- Para quien retira -->
+
+  <!-- Nombre de quien retira -->
+  <div
+    class="mb-3 animate__animated animate__fadeInDown"
+    *ngIf="getControl('paraQuienRetira').valid"
+  >
+    <label class="form-label">Nombre</label>
+    <input
+      type="text"
+      class="form-control form-control-sm"
+      formControlName="nombreQuienRetira"
+    />
+  </div>
+  <!-- Nombre de quien retira -->
+
+  <mat-dialog-actions align="end">
+    <button
+      type="button"
+      class="btn btn-light btn-sm mx-1"
+      [matDialogClose]="{ status: null, itemsToIgnore: itemsToNoChange }"
+      [disabled]="state === 'submitted'"
+    >
+      cancelar
+    </button>
+    <button
+      type="submit"
+      class="btn btn-primary btn-sm text-center"
+      [disabled]="formData.invalid || state === 'submitted'"
+    >
+      <i class="fas fa-sync-alt fa-spin" *ngIf="state === 'submitted'"></i>
+      retirar
+    </button>
+  </mat-dialog-actions>
+</form>

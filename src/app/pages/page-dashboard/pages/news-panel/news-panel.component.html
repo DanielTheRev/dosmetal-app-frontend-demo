@@ -1,0 +1,164 @@
+<div class="wrapper" *ngIf="!onCreateNew">
+  <div class="presentacion">
+    <header>
+      <h4 class="title">Presentacion</h4>
+    </header>
+    <div class="wrapper">
+      <h5 class="title">
+        Descripcion
+        <!-- edit options -->
+        <button
+          class="btn btn-sm"
+          (click)="EditPresentacion = true"
+          *ngIf="!EditPresentacion"
+        >
+          <i class="fas fa-edit"></i>
+        </button>
+        <button
+          class="btn btn-sm btn-success"
+          *ngIf="EditPresentacion"
+          (click)="saveDescription({ value: description.textContent! })"
+        >
+          Guardar
+        </button>
+        <button
+          class="btn btn-sm btn-danger"
+          *ngIf="EditPresentacion"
+          (click)="cancelEdit(description)"
+        >
+          Cancelar
+        </button>
+      </h5>
+      <div
+        class="description"
+        #description
+        [contentEditable]="EditPresentacion"
+        [ngClass]="{ onEdit: EditPresentacion }"
+      >
+        {{ PresentacionInfo.description }}
+      </div>
+      <!-- Imagenes -->
+      <h5 class="title">Imagenes</h5>
+      <div class="images">
+        <div
+          class="img-container"
+          *ngFor="let image of PresentacionInfo.images"
+          [ngClass]="{ 'no-image': !image.imgRef }"
+        >
+          <img [src]="image.imgRef.secure_url" *ngIf="image.imgRef" />
+          <input
+            type="file"
+            hidden
+            #inputFile
+            (change)="loadImage($event, image._id)"
+          />
+          <div class="no-image" *ngIf="!image.imgRef">
+            <span>Sin Imagen</span>
+          </div>
+          <div class="actions animate__animated animate__fadeIn">
+            <button class="btn btn-success btn-sm" (click)="inputFile.click()">
+              Cambiar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="new" *ngFor="let New of NewsList; index as i">
+    <header>
+      <h4 class="title">{{ New.title }}</h4>
+    </header>
+    <div class="wrapper">
+      <h5 class="title">
+        Descripcion
+        <button class="btn btn-sm" (click)="EditNews = true" *ngIf="!EditNews">
+          <i class="fas fa-edit"></i>
+        </button>
+        <button
+          class="btn btn-sm btn-success"
+          *ngIf="EditNews"
+          (click)="
+            saveDescription({
+              property: 'description',
+              value: description.textContent!,
+              target: 'News',
+              _id: New._id
+            })
+          "
+        >
+          Guardar
+        </button>
+        <button
+          class="btn btn-sm btn-danger"
+          *ngIf="EditNews"
+          (click)="cancelEdit(description, i)"
+        >
+          Cancelar
+        </button>
+      </h5>
+      <div
+        class="description"
+        #description
+        [contentEditable]="EditNews"
+        [ngClass]="{ onEdit: EditNews }"
+      >
+        {{ New.description }}
+      </div>
+      <h5 class="title">Imagenes</h5>
+      <div class="images">
+        <div
+          class="img-container"
+          *ngFor="let image of New.images"
+          [ngClass]="{ 'no-image': !image.imgRef }"
+        >
+          <img [src]="image.imgRef.secure_url" *ngIf="image.imgRef" />
+          <input
+            type="file"
+            hidden
+            #inputFile
+            (change)="loadImage($event, image._id, '', New._id!)"
+          />
+          <div class="no-image" *ngIf="!image.imgRef">
+            <span>Sin Imagen</span>
+          </div>
+          <div class="actions animate__animated animate__fadeIn">
+            <button class="btn btn-success btn-sm" (click)="inputFile.click()">
+              Cambiar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+  <app-news-item *ngFor="let new of NewsList" [NewsItem]="new"></app-news-item>
+</div>
+
+<app-create-news
+  *ngIf="onCreateNew"
+  (title)="NewsCreated.title = $event"
+  (description)="NewsCreated.description = $event"
+></app-create-news>
+<div class="actions">
+  <button
+    class="btn btn-sm btn-primary"
+    *ngIf="!onCreateNew"
+    (click)="onCreateNew = true"
+  >
+    Agregar Noticia
+  </button>
+  <button
+    class="btn btn-sm btn-success"
+    *ngIf="onCreateNew"
+    (click)="saveNews()"
+  >
+    Guardar
+  </button>
+  <button
+    class="btn btn-sm btn-warning"
+    *ngIf="onCreateNew"
+    (click)="onCreateNew = false"
+  >
+    Cancelar
+  </button>
+</div>

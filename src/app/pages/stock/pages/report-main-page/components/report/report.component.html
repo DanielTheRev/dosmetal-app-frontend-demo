@@ -1,0 +1,48 @@
+<div class="document" #ReportEl *ngIf="Report">
+  <div class="logo">
+    <img src="assets/logo3.png" alt="" />
+  </div>
+  <div class="document-title">
+    <h3 class="title">{{ Report.name }}</h3>
+  </div>
+
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Inventario</th>
+          <th>total</th>
+          <th>Observaciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of Report.data">
+          <td>{{ item.Nombre }}</td>
+          <td>
+            <ul>
+              <li *ngFor="let inventario of item.Inventario">
+                <app-inventory-item
+                  [inventory]="inventario"
+                ></app-inventory-item>
+              </li>
+            </ul>
+          </td>
+          <td>{{ item.TotalInventario }}</td>
+          <td>
+            <div class="lowStockInventoryFooter">
+              <span class="d-block"
+                >Cantidad total: {{ item.TotalInventario }}
+                {{ item.TotalInventario > 1 ? "unidades" : "unidad" }}</span
+              >
+              <span class="text-danger d-block"
+                >Se requieren un minimo de
+                {{ item.Cant_poco_stock }} unidades.</span
+              >
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

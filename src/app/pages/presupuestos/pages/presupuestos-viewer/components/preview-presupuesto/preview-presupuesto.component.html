@@ -1,0 +1,183 @@
+<ng-container *ngIf="Presupuesto">
+  <header>
+    <button class="btn btn-outline-secondary btn-sm" (click)="goBack()">
+      <i class="fas fa-chevron-left"></i> volver
+    </button>
+    <div class="title">Presupuesto Nro: {{ Presupuesto.PresupuestoNum }}</div>
+
+    <div class="buttons">
+      <button
+        class="btn btn-outline-success btn-sm"
+        (click)="Print('Download')"
+      >
+        Descargar
+      </button>
+      <button class="btn btn-primary btn-sm btn-print" (click)="Print('Print')">
+        imprimir
+      </button>
+    </div>
+  </header>
+
+  <div class="document-wrapper">
+    <div class="document" #PdfDocument *ngIf="Presupuesto !== undefined">
+      <div class="page" *ngFor="let page of Paginas; index as p">
+        <header *ngIf="page.pageNumber === 1">
+          <div class="title">
+            <h3 class="m-0">Oferta Economica</h3>
+            <div class="logo">
+              <img src="assets/logo.jpg" alt="" />
+            </div>
+          </div>
+          <div class="Company">
+            <div class="data-wrapper">
+              <div class="data">Calle 10 N° 3758, Berazategui.</div>
+              <div class="data">
+                <h5 class="m-0">DOS METAL CONS SRL</h5>
+                www.dosmetal.com.ar
+              </div>
+              <div class="data">Contacto: 11-40999026</div>
+            </div>
+          </div>
+        </header>
+
+        <!-- body -->
+        <div class="body" #bodyTemplate>
+          <div class="client-data" *ngIf="page.pageNumber === 1">
+            <div class="data">
+              <div class="data-row">
+                <span>Sres:</span>
+                <span>{{ Presupuesto.Cliente.nombre }}</span>
+              </div>
+              <div class="data-row">
+                <span>Obra:</span>
+                <span>{{ Presupuesto.Obra }}</span>
+              </div>
+            </div>
+            <div class="data">
+              <div class="data-row">
+                <span>Fecha:</span>
+                <span>{{ Presupuesto.Fecha | date : "dd-MM-YYYY" }} </span>
+              </div>
+              <div class="data-row">
+                <span>Presupuesto num:</span>
+                <span>{{
+                  Presupuesto.PresupuestoNum === 0
+                    ? 1000
+                    : Presupuesto.PresupuestoNum
+                }}</span>
+              </div>
+            </div>
+          </div>
+          <!-- Presupuestos -->
+
+          <div class="presupuesto">
+            <div class="pre-header">
+              <div class="item-nro">Item</div>
+              <div class="item-description text-start">Descripción</div>
+              <div
+                class="item-precio"
+                *ngIf="Presupuesto.TipoPresupuesto === 'Abierto'"
+              >
+                Precio
+              </div>
+            </div>
+            <div class="pre-body" #tablePresupuesto>
+              <app-item
+                [id]="i + 1"
+                *ngFor="let item of page.pageData; index as i"
+                #itemEl
+                [Item]="{
+                  page: page.pageNumber,
+                  data: item,
+                  itemNro: i + 1,
+                  TipoPresupuesto: Presupuesto.TipoPresupuesto
+                }"
+              ></app-item>
+            </div>
+          </div>
+        </div>
+
+        <footer class="footer" #footerTemplate>
+          <div class="price" *ngIf="page.showFooter">
+            <div class="payment-methods">
+              <div class="data">
+                <span>Forma de pago:</span>
+                <span>Plazo de entrega:</span>
+                <span>Lugar de entrega:</span>
+                <span>Validez de la oferta:</span>
+              </div>
+              <div class="values ms-3">
+                <div #metodo>
+                  {{ Presupuesto.FormaDePago || "..." }}
+                </div>
+                <div #PlazoDeEntrega>
+                  {{ Presupuesto.PlazoDeEntrega || "..." }}
+                </div>
+                <div #LugarDeEntrega>
+                  {{ Presupuesto.LugarDeEntrega || "..." }}
+                </div>
+                <span #ValidezDelPresupuesto>{{
+                  Presupuesto.ValidezDeOferta || "..."
+                }}</span>
+              </div>
+            </div>
+            <div class="wraper">
+              <div class="data">
+                <span>Subtotal:</span>
+                <span *ngIf="Presupuesto.IvaIncluido === 'Incluido'"
+                  >IVA 21%:</span
+                >
+                <span>Total:</span>
+              </div>
+              <div class="values">
+                <span class="text-end ms-2">
+                  {{
+                    Presupuesto.SubTotal.toLocaleString("es-AR", {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                    }) + "$"
+                  }}</span
+                >
+                <span
+                  class="text-end ms-2"
+                  *ngIf="Presupuesto.IvaIncluido === 'Incluido'"
+                >
+                  {{
+                    Presupuesto.IVA21.toLocaleString("es-AR", {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                    }) + "$"
+                  }}</span
+                >
+                <span class="text-end ms-2">
+                  {{
+                    Presupuesto.Total.toLocaleString("es-AR", {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                    }) + "$"
+                  }}
+                </span>
+              </div>
+            </div>
+          </div>
+          <div
+            class="nota-user alert alert-warning"
+            *ngIf="
+              Presupuesto.Nota.length > 0 && page.pageNumber === Paginas.length
+            "
+          >
+            {{ Presupuesto.Nota }}
+          </div>
+          <div class="warning nota" #notaPrecio>
+            Los precios cotizados pueden ser susceptibles de modificaciones
+            debido a las variaciones que se produzcan en el mercado al momento
+            de confirmar y abonar efectivamente la operación.
+          </div>
+          <span class="page-indicator"
+            >Pàgina {{ page.pageNumber }} de {{ Paginas.length }}</span
+          >
+        </footer>
+      </div>
+    </div>
+  </div>
+</ng-container>

@@ -1,0 +1,33 @@
+<header>
+  <h5>Agregar Nueva Noticia</h5>
+</header>
+
+<div class="inputs">
+  <div class="input">
+    <label for="title" class="form-label">Titulo</label>
+    <input
+      type="text"
+      name="title"
+      id="title"
+      #title
+      (input)="onTitle(title.value, 'title')"
+      class="form-control form-control-sm"
+    />
+  </div>
+
+  <div class="input">
+    <label for="description" class="form-label">Descripcion</label>
+    <textarea
+      name="description"
+      id="description"
+      rows="10"
+      #description
+      class="form-control"
+      placeholder="Escribe una descripcion"
+      (input)="onTitle(description.value, '')"
+    ></textarea>
+  </div>
+
+</div>
+
+

@@ -1,0 +1,22 @@
+<header class="inventory-header">
+  <a routerLink="GestionInventario" routerLinkActive="active"
+    >Gestión de inventario</a
+  >
+
+  <a routerLink="Gestionar-Herramientas" routerLinkActive="active"
+    >Gestión de herramientas</a
+  >
+
+  <a routerLink="Reporte" routerLinkActive="active" style="position: relative"
+    >Reporte
+    <i
+      id="stock-indicator"
+      class="fas fa-exclamation-circle text-warning"
+      *ngIf="lowStock > 0"
+    ></i>
+  </a>
+</header>
+
+<div class="page-wrapper">
+  <router-outlet></router-outlet>
+</div>

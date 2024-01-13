@@ -1,0 +1,112 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  padding: 0.2rem;
+}
+.title {
+  margin: 0px;
+  padding: 0.5rem;
+  text-align: center;
+  color: #fff;
+}
+.months {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+  // grid-auto-rows: 200px;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  overflow: auto;
+  background-color: #333;
+  border-radius: 5px;
+  color: #eee;
+  .month {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    grid-template-columns: 100%;
+    grid-template-rows: repeat(2, max-content) 1fr;
+    border: 2px solid #eee;
+    border-radius: 5px;
+    padding: 0.2rem;
+    .month_name {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0.2rem;
+    }
+
+    .month_week {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      // border-radius: 5px;
+      overflow: hidden;
+      .month_days {
+        display: grid;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        list-style: none;
+        grid-template-columns: repeat(7, 1fr);
+        background-color: cadetblue;
+        color: #fff;
+        padding: 0.2rem;
+        text-align: center;
+      }
+    }
+    .month_days_in {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      ul {
+        display: grid;
+        width: 100%;
+        height: 100%;
+        list-style: none;
+        padding: 0.2rem;
+        margin: 0;
+        grid-template-columns: repeat(7, 1fr);
+        text-align: end;
+        gap: 0.1rem;
+        .month_day_number {
+          display: flex;
+          flex-direction: column;
+          // width: 30px;
+          // height: 30px;
+          justify-content: center;
+          align-items: center;
+          border-radius: 50%;
+          padding: 0.2rem;
+          .day_number {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            &.have_data {
+              border: 2px solid #ccc;
+              cursor: pointer;
+              &:hover {
+                background-color: green;
+                border-color: #fff !important;
+                .data-msg,
+                span {
+                  color: #fff !important;
+                }
+              }
+            }
+          }
+          .data-msg {
+            font-size: 10px;
+          }
+        }
+      }
+    }
+  }
+}

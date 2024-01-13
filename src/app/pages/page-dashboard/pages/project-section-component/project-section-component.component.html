@@ -1,0 +1,58 @@
+<button class="btn btn-sm btn-primary" id="add-btn" (click)="addProjectBTN()">
+  {{ showAddView ? "Volver" : "Agregar" }}
+</button>
+<h5 *ngIf="sectionActivated.data.length <= 0 && !showAddView">
+  No hay publicaciones en esta seccion
+</h5>
+<ng-container *ngIf="!showAddView; else addTemplate">
+  <div class="project-list">
+    <div
+      class="card"
+      [ngClass]="{ 'border-2 border-success': project.isLastProject }"
+      *ngFor="let project of sectionActivated.data"
+    >
+      <span class="badge bg-success" *ngIf="project.isLastProject"
+        >Obra reciente</span
+      >
+      <div class="row g-0 h-100">
+        <div class="col-md-4" style="position: relative">
+          <img
+            [src]="project.ProjectImgs[0].secure_url"
+            class="img-fluid rounded-start"
+            loading="lazy"
+            alt="..."
+          />
+        </div>
+        <div class="col-md-8 h-100">
+          <div class="card-body h-100 text-right">
+            <h5 class="card-title">{{ project.ProjectTitle }}</h5>
+            <p class="card-text">
+              {{ project.ProjectDescription }}
+            </p>
+            <!-- <p class="card-text">
+              <small class="text-muted">Last updated 3 mins ago</small>
+            </p> -->
+            <div class="actions">
+              <button
+                class="btn btn-primary me-2 btn-sm"
+                (click)="editProject(project)"
+              >
+                Editar obra
+              </button>
+              <button class="btn btn-danger btn-sm" (click)="deleteProject(project._id!)">Eliminar obra</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<ng-template #addTemplate>
+  <div class="add-project">
+    <app-add-project
+      [section]="sectionActivated"
+      [project]="projectSelected"
+      (newProject)="addNewProject($event)"
+    ></app-add-project>
+  </div>
+</ng-template>

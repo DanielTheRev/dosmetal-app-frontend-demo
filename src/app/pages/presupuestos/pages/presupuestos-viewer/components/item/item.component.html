@@ -1,0 +1,28 @@
+<div
+  class="wrapper"
+  [ngClass]="{ 'no-itemprecio': Item.TipoPresupuesto === 'Cerrado' }"
+>
+  <div class="item-nro">
+    {{ Item.itemNro }}
+  </div>
+
+  <div class="item-descripcion" #itemDescripcion>
+    {{ Item.data.Descripcion }}
+  </div>
+
+  <div
+    class="item-precio text-wrap"
+    #itemPrecio
+    *ngIf="Item.TipoPresupuesto === 'Abierto'"
+  >
+    {{
+      Item.data.Precio === "" || Item.data.Precio === "0"
+        ? ""
+        : "$" +
+          Item.data.Precio.toLocaleString("es-AR", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+          })
+    }}
+  </div>
+</div>

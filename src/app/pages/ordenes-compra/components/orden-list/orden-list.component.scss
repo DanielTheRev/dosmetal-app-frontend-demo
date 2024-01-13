@@ -1,0 +1,60 @@
+@import '../../../../../variables';
+
+:host {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  letter-spacing: 0.01px !important;
+  background: $ActivePageBG;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.header {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  .title {
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    font-size: 1.5rem;
+    font-style: italic;
+    margin-bottom: 0.3rem;
+    color: #fff;
+  }
+  .wrapper {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 0.3rem;
+    align-items: center;
+    .input-finder {
+      position: relative;
+      .icon {
+        position: absolute;
+        width: 30px;
+        height: 100%;
+        left: 0px;
+        top: 0px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .finder {
+        padding-left: 30px !important;
+        &:focus {
+          .input-finder > .icon {
+            color: red !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+

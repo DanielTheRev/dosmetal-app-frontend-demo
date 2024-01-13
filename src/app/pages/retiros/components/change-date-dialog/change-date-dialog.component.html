@@ -1,0 +1,34 @@
+<h2 matDialogTitle>Seleccione una fecha</h2>
+
+<mat-dialog-content class="mat-typography">
+  <div class="container-fluid">
+    <div class="row g-2">
+      <div class="col-4" *ngFor="let month of months">
+        <div class="card w-100 shadow">
+          <div class="card-body">
+            <h3 class="card-title text-center m-0 bg-primary text-light rounded" style="text-transform: capitalize;">
+              {{ formatDate(month.timeStamp)}}
+            </h3>
+          </div>
+          <app-days-list
+            [MonthID]="month._id"
+            (DayMonthIDs)="DayMonthIDs = $event"
+            [Days]="month.days.sort()"
+          ></app-days-list>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button class="btn btn-secondary btn-sm me-1" matDialogClose>Cancelar</button>
+
+  <button
+    class="btn btn-primary btn-sm"
+    [disabled]="!DayMonthIDs"
+    (click)="saveChanges()"
+  >
+    Guardar
+  </button>
+</mat-dialog-actions>

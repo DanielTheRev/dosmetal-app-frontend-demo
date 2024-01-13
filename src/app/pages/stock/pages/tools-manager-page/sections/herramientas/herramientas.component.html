@@ -1,0 +1,85 @@
+<app-tools-manager-header
+  [HeaderTitle]="'Herramientas disponibles'"
+  (SearchKey)="search($event.keyword)"
+></app-tools-manager-header>
+
+<div class="no-data" *ngIf="!loading && Tools.isEmpty">
+  Todavia no hay herramientas ingresadas.
+</div>
+<div class="loading" *ngIf="loading">Cargando datos...</div>
+
+<div class="tool-list" *ngIf="!Tools.isEmpty">
+  <div class="card-tool" *ngFor="let Tool of Tools.data">
+    <div class="card-tool-img">
+      <img [src]="Tool.imgRef.secure_url" />
+    </div>
+
+    <div class="card-tool-body">
+      <div class="card-tool-title">
+        {{ Tool.Nombre }}
+      </div>
+      <div class="card-tool-brand">
+        <span class="badge bg-success">{{ Tool.Marca }}</span>
+      </div>
+      <div class="card-tool-description">
+        <ul class="list-group">
+          <li *ngFor="let stock of Tool.Stock" class="list-group-item">
+            <span class="cantidad">
+              x{{ stock.Cantidad }}
+              {{ stock.Cantidad > 1 ? "unidades" : "unidad" }}
+            </span>
+            <span
+              [ngClass]="{
+                'text-success': stock.Estado === 'Funcionando',
+                'text-danger': stock.Estado === 'Dañada'
+              }"
+              >{{ stock.Estado }}</span
+            >
+            <span class="text-warning">{{ stock.Ubicacion }}</span>
+            <span class="badge bg-secondary">{{ stock.Fecha_Compra }}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card-menu">
+      <div class="dropdown">
+        <button
+          class="btn btn-secondary dropdown-toggle btn-sm"
+          type="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+        <i class="fas fa-bars"></i>
+        </button>
+        <ul class="dropdown-menu">
+          <li class="dropdown-item pe-auto" (click)="editTool(Tool._id!)">Editar</li>
+          <li class="dropdown-item pe-auto">Retirar herramienta</li>
+          <li class="dropdown-item pe-auto" (click)="deleteTool(Tool._id!)">Eliminar</li>
+        </ul>
+      </div>
+    </div>
+    <!-- <div class="card-tool-buttons">
+      <button
+        class="btn btn-outline-secondary btn-sm text-success"
+        (click)="editTool(Tool._id!)"
+        title="Editar herramienta"
+      >
+        <i class="fas fa-edit"></i>
+      </button>
+      <button
+        class="btn btn-outline-secondary btn-sm text-success"
+        title="Prestar herramienta"
+      >
+        P
+      </button>
+      <button
+        class="btn btn-outline-secondary btn-sm text-danger"
+        title="Eliminar herramienta"
+        (click)="deleteTool(Tool._id!)"
+      >
+        <i class="fas fa-trash"></i>
+      </button>
+    </div> -->
+  </div>
+</div>

@@ -1,0 +1,110 @@
+<div class="new">
+  <header>
+    <h4
+      class="title"
+      #title
+      [contentEditable]="OnEditNewsTitle"
+      [ngClass]="{ onEdit: OnEditNewsTitle }"
+    >
+      {{ NewsItem.title }}
+    </h4>
+    <div class="edit-options">
+      <button
+        class="btn btn-sm"
+        (click)="OnEditNewsTitle = true"
+        *ngIf="!OnEditNewsTitle"
+      >
+        <i class="fas fa-edit"></i>
+      </button>
+
+      <button
+        class="btn btn-sm btn-success"
+        *ngIf="OnEditNewsTitle"
+        (click)="
+          saveDescription({
+            property: 'title',
+            value: title.textContent!,
+            _id: NewsItem._id
+          })
+        "
+      >
+        Guardar
+      </button>
+      <button
+        class="btn btn-sm btn-danger"
+        *ngIf="OnEditNewsTitle"
+        (click)="cancelEdit(title, 'title')"
+      >
+        Cancelar
+      </button>
+    </div>
+  </header>
+  <div class="wrapper">
+    <header>
+      <h5>Descripcion</h5>
+      <div class="edit-options">
+        <button
+          class="btn btn-sm"
+          (click)="OnEditNews = true"
+          *ngIf="!OnEditNews"
+        >
+          <i class="fas fa-edit"></i>
+        </button>
+        <button
+          class="btn btn-sm btn-success"
+          *ngIf="OnEditNews"
+          (click)="
+            saveDescription({
+              property: 'description',
+              value: description.textContent!,
+              _id: NewsItem._id
+            })
+          "
+        >
+          Guardar
+        </button>
+        <button
+          class="btn btn-sm btn-danger"
+          *ngIf="OnEditNews"
+          (click)="cancelEdit(description, 'description')"
+        >
+          Cancelar
+        </button>
+      </div>
+    </header>
+
+    <div
+      class="description"
+      #description
+      [contentEditable]="OnEditNews"
+      [ngClass]="{ onEdit: OnEditNews }"
+    >
+      {{ NewsItem.description }}
+    </div>
+    <!-- Imagenes -->
+    <h5 class="title">Imagenes</h5>
+    <div class="images">
+      <div
+        class="img-container"
+        *ngFor="let image of NewsItem.images"
+        [ngClass]="{ 'no-image': !image.imgRef }"
+      >
+        <img [src]="image.imgRef.secure_url" *ngIf="image.imgRef" />
+        <input
+          type="file"
+          hidden
+          #inputFile
+          (change)="loadImage($event, image._id, NewsItem._id!)"
+        />
+        <div class="no-image" *ngIf="!image.imgRef">
+          <span>Sin Imagen</span>
+        </div>
+        <div class="actions animate__animated animate__fadeIn">
+          <button class="btn btn-success btn-sm" (click)="inputFile.click()">
+            Cambiar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

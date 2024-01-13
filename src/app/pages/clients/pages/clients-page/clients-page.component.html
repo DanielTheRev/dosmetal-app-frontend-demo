@@ -1,0 +1,26 @@
+<header>
+  <div class="title">Clientes</div>
+  <div class="control-bar">
+    <div class="btn btn-primary btn-sm" (click)="addNewClient()">
+      Nuevo cliente
+    </div>
+    <div class="input-finder">
+      <div class="icon">
+        <i class="fas fa-search text-secondary"></i>
+      </div>
+      <input
+        type="text"
+        class="form-control form-control-sm finder"
+        placeholder="Buscar"
+        #term
+        (keyup)="findCliente(term.value.toLowerCase().trim())"
+      />
+    </div>
+  </div>
+</header>
+<div class="table-wrapper">
+  <app-clients-table
+    [Clientes]="ClientesFilter"
+    (EditClientID)="openEditClientForm($event)"
+  ></app-clients-table>
+</div>
