@@ -5,12 +5,33 @@
   height: 100%;
   overflow: auto;
   padding: 0.2rem;
+  animation: fadeIn;
+  animation-duration: 0.5s;
+
+  --month-bg-color: #333;
+  --month-color: #eee;
+  --month-border-color: #eee;
+  --day-number-have-data-bg-color: #ccc;
+  --day-number-have-data-color: #333;
+  --day-number-have-data-hover-color: green;
 }
+
+@media (prefers-color-scheme: light) {
+  :host {
+    --month-bg-color: #fff;
+    --month-color: #333333b0;
+    --month-border-color: darkblue;
+    --day-number-have-data-bg-color: green;
+    --day-number-have-data-color: #eee;
+    --day-number-have-data-hover-color: #fff;
+  }
+}
+
 .title {
   margin: 0px;
   padding: 0.5rem;
   text-align: center;
-  color: #fff;
+  color: var(--page-color);
 }
 .months {
   display: grid;
@@ -21,16 +42,16 @@
   gap: 0.5rem;
   padding: 0.5rem;
   overflow: auto;
-  background-color: #333;
+  background-color: var(--month-bg-color);
   border-radius: 5px;
-  color: #eee;
+  color: var(--month-color);
   .month {
     display: grid;
     width: 100%;
     height: 100%;
     grid-template-columns: 100%;
     grid-template-rows: repeat(2, max-content) 1fr;
-    border: 2px solid #eee;
+    border: 2px solid var(--month-border-color);
     border-radius: 5px;
     padding: 0.2rem;
     .month_name {
@@ -90,15 +111,11 @@
             height: 30px;
             border-radius: 50%;
             &.have_data {
-              border: 2px solid #ccc;
+              background-color: var(--day-number-have-data-bg-color);
+              color: var(--day-number-have-data-color);
               cursor: pointer;
               &:hover {
-                background-color: green;
-                border-color: #fff !important;
-                .data-msg,
-                span {
-                  color: #fff !important;
-                }
+                color: var(--day-number-have-data-hover-color) !important;
               }
             }
           }

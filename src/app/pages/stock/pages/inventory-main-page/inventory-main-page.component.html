@@ -33,7 +33,7 @@
       Carrito
       <span
         class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-        style="z-index: 5;"
+        style="z-index: 5"
         *ngIf="cart.length > 0"
       >
         {{ cart.length }}
@@ -57,7 +57,7 @@
           style="cursor: pointer"
           (click)="file.click()"
         >
-          <input type="file" #file hidden (change)="openExcel(file)" />
+          <input type="file" #file hidden />
           Importar Excel
         </li>
         <li class="dropdown-item" style="cursor: pointer">
@@ -74,9 +74,9 @@
 </div>
 
 <div class="cards-inventory">
-  <div class="card-inventory" *ngFor="let item of InventoryFiltered">
+  <div class="card-inventory" *ngFor="let item of currentPage.data">
     <div class="card-inventory-img">
-      <img [src]="item.ImgRef.secure_url" *ngIf="item.ImgRef" loading="lazy"/>
+      <img [src]="item.ImgRef.secure_url" *ngIf="item.ImgRef" loading="lazy" />
     </div>
     <div class="card-inventory-body">
       <div class="card-inventory-header">
@@ -175,6 +175,14 @@
     </div>
   </div>
 </div>
+
+<app-paginate-nav
+  [Pages]="Pages"
+  [CurrentPage]="currentPage"
+  (previousPage)="previousPage()"
+  (setPage)="setPage($event.pageNumber)"
+  (nextPage)="nextPage()"
+></app-paginate-nav>
 
 <div class="alert alert-info" role="alert" *ngIf="dataStatus === 'Cargando'">
   Cargando datos

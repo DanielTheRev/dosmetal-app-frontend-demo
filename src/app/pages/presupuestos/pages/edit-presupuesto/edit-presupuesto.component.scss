@@ -3,14 +3,26 @@
   width: 100%;
   height: 100%;
   gap: 0.2rem;
-  background: #333;
+  background: var(--page-bg-color);
   overflow: auto;
+  --presupuesto-edit-aside-bg-color: #333;
+  --presupuesto-edit-aside-color: #ced4da;
+  --presupuesto-price-description-color: #ced4da;
+}
+
+@media (prefers-color-scheme: light) {
+  :host {
+    --presupuesto-edit-aside-bg-color: #130066;
+    --presupuesto-edit-aside-color: #ced4da;
+    --presupuesto-price-description-color: #333;
+  }
 }
 
 .form-wrapper {
   display: flex;
   width: 100%;
   height: 100%;
+  background: #fff;
   @media (max-width: 768px) {
     overflow-x: auto;
     scroll-snap-type: x mandatory;
@@ -35,8 +47,8 @@
     height: 100%;
     flex-direction: column;
     justify-content: space-between;
-    background: #444;
-    color: var(--bs-gray-400);
+    background-color: var(--presupuesto-edit-aside-bg-color);
+    color: var(--presupuesto-edit-aside-color);
     padding: 1rem;
     .client-data {
       width: 100%;
@@ -112,18 +124,13 @@
     width: 100%;
     height: 100%;
     overflow: auto;
-    .count {
+    .count-alert {
       display: flex;
-      gap: 0.2rem;
-      background-color: var(--bs-warning);
-      padding: 0.2rem;
-      font-size: 1rem;
       justify-content: center;
       align-items: center;
-      & > div {
-        color: #333;
-        padding: 0px 0.5rem;
-      }
+      gap: 1rem;
+      border-radius: 0 !important;
+      margin-bottom: 0px !important;
     }
     .items-list {
       display: flex;
@@ -138,7 +145,7 @@
           position: sticky;
           top: 0;
           z-index: 1;
-          background-color: var(--bs-gray-300);
+          background-color: var;
         }
         tbody tr {
           background-color: #ffff;
@@ -155,7 +162,7 @@
             outline: none;
             align-items: center;
             padding-left: 0.5rem !important;
-            color: var(--bs-gray-400);
+            color: var(--presupuesto-price-description-color);
             &:hover {
               border-color: var(--bs-warning);
             }
@@ -194,6 +201,7 @@
       align-items: center;
       .nota {
         width: 100%;
+        border-radius: 0px !important;
       }
     }
   }

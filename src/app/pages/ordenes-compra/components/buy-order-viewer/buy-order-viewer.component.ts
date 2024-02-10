@@ -25,8 +25,8 @@ export class BuyOrderViewerComponent implements OnInit {
     this.BuyOrderStore.BuyOrders$.subscribe({
       next: (Orders) => {
         const ID = this.ActivatedRouter.snapshot.params['id'];
-        if (Orders.isEmpty) return;
-        this.BuyOrder = Orders.data.find((e) => e._id === ID);
+        if (Orders.length <= 0) return;
+        this.BuyOrder = Orders.find((e) => e._id === ID);
       },
     });
   }

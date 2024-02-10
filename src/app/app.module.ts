@@ -12,9 +12,15 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { MaterialModule } from './shared/material.module';
+import { SidenavComponent } from './pages/dashboard/components/sidenav/sidenav.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, DashboardComponent],
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    DashboardComponent,
+    SidenavComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,

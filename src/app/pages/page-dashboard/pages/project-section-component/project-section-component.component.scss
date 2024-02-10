@@ -6,9 +6,11 @@
   height: 100%;
 }
 
-h5 {
-  width: 100%;
-  text-align: center;
+header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  color: var(--page-color);
   padding: 1rem;
 }
 

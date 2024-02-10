@@ -31,7 +31,7 @@ export class ClientsTableComponent implements OnInit {
     const doc = document as any;
     doc.startViewTransition(() => {
       this.NgZone.run(() => {
-        this.Router.navigate(['clients', 'ver', _id]);
+        this.Router.navigate(['clientes', 'ver', _id]);
       });
     });
   }

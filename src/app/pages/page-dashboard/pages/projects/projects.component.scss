@@ -1,39 +1,8 @@
 @import '../../../../../variables';
 :host { 
-  display: grid;
+  display: flex;
+  flex-direction: column;
   width: 100%;
   height: 100%;
-  grid-template-columns: 100%;
-  grid-template-rows: max-content 1fr;
-}
-
-.navbar {
-  position: sticky;
-  display: flex;
-  width: 100%;
-  justify-content: space-evenly;
-  gap: 1rem;
-  top: 0px;
-  left: 0px;
-  z-index: 5;
-  margin: 0px;
-  background-color: $ActivePageBG;
-  // border: 2px solid #3f4c6b;
-  overflow: hidden;
-  li {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0.5rem;
-    padding-right: 1rem;
-    padding-left: 1rem;
-    border-radius: 5px;
-    overflow: hidden;
-    &.active {
-      background-color: #606c88;
-    }
-    a {
-      color: #fff;
-    }
-  }
+  overflow: auto;
 }

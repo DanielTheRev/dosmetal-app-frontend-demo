@@ -1,5 +1,3 @@
-@import '../../../../../variables';
-
 :host {
   position: relative;
   display: flex;
@@ -8,7 +6,8 @@
   flex-direction: column;
   align-items: center;
   letter-spacing: 0.01px !important;
-  background: $ActivePageBG;
+  background: var(--page-bg-color);
+  color: var(--page-color);
   gap: 1rem;
   padding: 1rem;
 }
@@ -24,9 +23,7 @@
     width: 100%;
     justify-content: flex-start;
     font-size: 1.5rem;
-    font-style: italic;
     margin-bottom: 0.3rem;
-    color: #fff;
   }
   .wrapper {
     display: grid;

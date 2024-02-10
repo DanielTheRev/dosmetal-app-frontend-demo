@@ -59,6 +59,7 @@ export class AddInventoryDialogComponent implements OnInit {
     this.loading = true;
     const itemID = this.ActivatedRoute.snapshot.params['_id'];
     if (itemID) {
+      console.log('exite');
       this.InventoryStore.getIventoryItem(itemID).subscribe({
         next: (item) => {
           if (item) {
@@ -95,7 +96,6 @@ export class AddInventoryDialogComponent implements OnInit {
       if (!e.clipboardData) return;
 
       const file = e.clipboardData.files[0];
-      if(!file) return;
       if (!file.type.startsWith('image'))
         return console.log('No es una imagen valida');
 

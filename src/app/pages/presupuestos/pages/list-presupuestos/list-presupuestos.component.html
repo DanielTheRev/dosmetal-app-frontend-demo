@@ -20,5 +20,16 @@
 </header>
 
 <div class="table-container">
-  <app-presupuesto-table-list [presupuestos]="PresupuestosFiltered"></app-presupuesto-table-list>
+  <app-presupuesto-table-list
+    [presupuestos]="currentPage.data"
+  ></app-presupuesto-table-list>
 </div>
+
+<app-paginate-nav
+  [Pages]="Pages"
+  [CurrentPage]="currentPage"
+  (previousPage)="previousPage()"
+  (nextPage)="nextPage()"
+  (setPage)="setPage($event.pageNumber)"
+>
+</app-paginate-nav>

@@ -20,7 +20,15 @@
 </header>
 <div class="table-wrapper">
   <app-clients-table
-    [Clientes]="ClientesFilter"
+    [Clientes]="currentPage.data"
     (EditClientID)="openEditClientForm($event)"
   ></app-clients-table>
 </div>
+
+<app-paginate-nav
+  [Pages]="Pages"
+  [CurrentPage]="currentPage"
+  (previousPage)="previousPage()"
+  (nextPage)="nextPage()"
+  (setPage)="setPage($event.pageNumber)"
+></app-paginate-nav>

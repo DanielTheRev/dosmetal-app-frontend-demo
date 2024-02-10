@@ -1,5 +1,3 @@
-@import '../../../../../variables';
-
 :host {
   display: grid;
   width: 100%;
@@ -7,17 +5,11 @@
   padding: 0.8rem;
   grid-template-columns: 100%;
   grid-template-rows: max-content 1fr;
-  background: $ActivePageBG;
+  background: var(--page-bg-color);
 }
-
-$title-color-primary: #061729;
-$text-color-primary: #828990;
-$active-tab-color: #244464;
-$active-tab-text: #043068;
 
 header.inventory-header {
   display: flex;
-  color: $title-color-primary;
   font-style: italic;
   font-size: 1.2rem;
   justify-content: flex-start;
@@ -28,7 +20,7 @@ header.inventory-header {
   }
   a {
     min-width: max-content;
-    color: #e6e6e6;
+    color: var(--inventory-header-a-color);
     text-decoration: none;
     cursor: default;
     &.active {

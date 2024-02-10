@@ -9,15 +9,22 @@ import { CreateBuyOrderComponent } from './components/create-buy-order/create-bu
 import { MaterialModule } from '../../shared/material.module';
 import { BuyOrderViewerComponent } from './components/buy-order-viewer/buy-order-viewer.component';
 import { BuyOrderComponent } from './components/buy-order/buy-order.component';
+import { SharedComponentsModule } from 'src/app/shared/components/components.module';
 
 @NgModule({
-  declarations: [OrdenListComponent, CreateBuyOrderComponent, BuyOrderViewerComponent, BuyOrderComponent],
+  declarations: [
+    OrdenListComponent,
+    CreateBuyOrderComponent,
+    BuyOrderViewerComponent,
+    BuyOrderComponent,
+  ],
   imports: [
     CommonModule,
     OrdenesCompraRoutingModule,
     MaterialModule,
     ReactiveFormsModule,
     HttpClientModule,
+    SharedComponentsModule,
   ],
 })
 export class OrdenesCompraModule {}

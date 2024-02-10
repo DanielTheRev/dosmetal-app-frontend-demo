@@ -1,9 +1,6 @@
-<div class="form-container">
-  <div class="welcome p-4 text-left">
-    <h5 class="text-light">
-      DOS METAL <br />
-      Construcciones
-    </h5>
+<div class="form-container" data-bs-theme="light">
+  <div class="welcome p-4">
+    <img src="assets/dosmetal-logo.svg" />
   </div>
   <div class="form">
     <form
@@ -16,7 +13,6 @@
       <p>Utilice sus credenciales para iniciar sesión</p>
       <div class="container">
         <div class="row g-2 align-items-center justify-content-center">
-
           <div class="col-12">
             <label class="form-label" for="user">Usuario</label>
             <input
@@ -38,8 +34,10 @@
           </div>
         </div>
       </div>
-      <!-- <h5 class="badge badge-danger fw-normal m-2" *ngIf="ErrorOnLogin.message.length != 0">{{ErrorOnLogin.message}}</h5> -->
-      <button type="submit" class="btn btn-primary btn-sm mt-2">Iniciar Sesion</button>
+
+      <button type="submit" class="btn btn-primary btn-sm mt-2">
+        Iniciar Sesion
+      </button>
     </form>
   </div>
 </div>

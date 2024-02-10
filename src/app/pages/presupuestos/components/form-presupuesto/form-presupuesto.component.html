@@ -1,0 +1,107 @@
+<div class="form-container" [ngClass]="{ 'd-none': PresupuestoToAdd }" data-bs-theme="light">
+  <header>{{ title }}</header>
+
+  <form [formGroup]="form" (ngSubmit)="Save()">
+    <div class="data">
+      <div class="inputs">
+        <label for="cliente" class="form-label">Cliente</label>
+        <select class="form-select form-select-sm" formControlName="Cliente">
+          <option
+            *ngFor="let cliente of Clientes"
+            [value]="cliente._id"
+            [ngValue]="cliente._id"
+          >
+            {{ cliente.nombre }}
+          </option>
+        </select>
+      </div>
+      <div class="inputs">
+        <label for="TipoPresupuesto" class="form-label">Tipo Presupuesto</label>
+        <select
+          id="TipoPresupuesto"
+          class="form-select form-select-sm"
+          formControlName="TipoPresupuesto"
+        >
+          <option value="Abierto">Abierto</option>
+          <option value="Cerrado">Cerrado</option>
+        </select>
+      </div>
+      <div class="inputs">
+        <label for="IvaIncluido" class="form-label">IVA</label>
+        <select
+          id="IvaIncluido"
+          class="form-select form-select-sm"
+          formControlName="IvaIncluido"
+        >
+          <option value="Incluido">Incluido</option>
+          <option value="No incluido">No incluido</option>
+        </select>
+      </div>
+      <div class="inputs">
+        <label for="obra" class="form-label">Obra</label>
+        <input
+          type="text"
+          class="form-control form-control-sm"
+          formControlName="Obra"
+        />
+      </div>
+      <div class="inputs">
+        <label for="formadepago" class="form-label">Forma de pago</label>
+        <input
+          type="text"
+          class="form-control form-control-sm"
+          formControlName="FormaDePago"
+        />
+      </div>
+
+      <div class="inputs">
+        <label for="plazodepago" class="form-label">Plazo de entrega</label>
+        <input
+          type="text"
+          class="form-control form-control-sm"
+          formControlName="PlazoDeEntrega"
+        />
+      </div>
+      <div class="inputs">
+        <label for="lugardeentrega" class="form-label">Lugar de entrega</label>
+        <input
+          type="text"
+          class="form-control form-control-sm"
+          formControlName="LugarDeEntrega"
+        />
+      </div>
+      <div class="inputs">
+        <label for="validezdeoferta" class="form-label"
+          >Validez de Oferta</label
+        >
+        <input
+          type="text"
+          class="form-control form-control-sm"
+          formControlName="ValidezDeOferta"
+        />
+      </div>
+    </div>
+
+    <div class="nota alert alert-warning mb-0" role="alert">
+      Nota:
+      <div
+        contenteditable="true"
+        #nota
+        [textContent]="form.value.Nota"
+        (input)="setValue(0, nota.innerText!, 'nota')"
+      ></div>
+    </div>
+
+    <footer>
+      <button
+        type="submit"
+        class="btn btn-primary btn-sm"
+        [disabled]="form.invalid"
+        [ngClass]="{ 'btn-danger': form.invalid }"
+        mat-dialog-close
+      >
+        Siguiente
+      </button>
+    </footer>
+  </form>
+</div>

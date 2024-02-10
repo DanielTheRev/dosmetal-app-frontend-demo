@@ -34,12 +34,14 @@ export class ProjectSectionComponentComponent implements OnInit {
     this.ActivatedRoute.params.subscribe({
       next: (params) => {
         const section = params['section'].split('-').join(' ');
+        
         this.ProjectService.getSectionData(section).subscribe({
           next: (res) => {
             this.sectionActivated = res;
             this.lastProject = this.sectionActivated.data.find(
               (p) => p.isLastProject
             )!;
+            this.showAddView = false;
           },
         });
       },

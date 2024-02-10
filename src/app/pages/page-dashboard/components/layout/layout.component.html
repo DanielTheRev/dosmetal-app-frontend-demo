@@ -1,22 +1,57 @@
-<!-- <ul class="nav nav-pills">
-  <li class="nav-item" *ngFor="let panel of panels">
-    <a
-      class="nav-link"
-      [routerLink]="panel.routerLink"
-      [routerLinkActive]="panel.routerLinkActive"
-      >{{ panel.title }}</a
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <span class="navbar-brand">Administrar Página Web</span>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
     >
-  </li>
-</ul> -->
-<ul class="navbar">
-  <li
-    class="navbar-item"
-    *ngFor="let panel of panels"
-    [routerLinkActive]="panel.routerLinkActive"
-  >
-    <a class="navbar-link" [routerLink]="panel.routerLink">{{ panel.title }}</a>
-  </li>
-</ul>
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <ng-container *ngFor="let panel of panels">
+          <ng-container *ngIf="!panel.subRouter; else elseTemplate">
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                [routerLinkActive]="panel.routerLinkActive"
+                [routerLink]="panel.routerLink"
+                aria-current="page"
+                >{{ panel.title }}
+              </a>
+            </li>
+          </ng-container>
+          <ng-template #elseTemplate>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                {{ panel.subRouter?.label }}
+              </a>
+              <ul class="dropdown-menu">
+                <li *ngFor="let subPanel of panel.subRouter?.routes">
+                  <a class="dropdown-item" [routerLink]="[subPanel.route]">{{
+                    subPanel.section
+                  }}</a>
+                </li>
+              </ul>
+            </li>
+          </ng-template>
+        </ng-container>
+
+      </ul>
+    </div>
+  </div>
+</nav>
 
 <div class="panel-wrap">
   <router-outlet></router-outlet>

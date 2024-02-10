@@ -7,25 +7,32 @@
   grid-template-rows: repeat(2, max-content) 1fr;
   overflow-y: auto;
   gap: 0.5rem;
+  --inventory-header-a-color: #e6e6e6;
+  --inventory-nav-color: #fff;
+  --inventory-card-body-bg-color: #444;
+  --inventory-card-body-color: #eee;
+  --inventory-card-li-bg-color: transparent;
+  --inventory-card-li-color: #eee;
 }
 
-$title-color-primary: #061729;
-$text-color-primary: #828990;
-$active-tab-color: #244464;
-$active-tab-text: #043068;
+@media (prefers-color-scheme: light) {
+  :host {
+    --inventory-header-a-color: #eee;
+    --inventory-nav-color: #eee;
+    --inventory-card-body-bg-color: transparent;
+    --inventory-card-body-color: #eee;
+    --inventory-card-li-bg-color: transparent;
+    --inventory-card-li-color: #eee;
+  }
+}
 
 header.header {
   display: flex;
-  color: $title-color-primary;
   font-style: italic;
   gap: 0.5rem;
   a {
-    color: #e6e6e6;
     text-decoration: none;
     cursor: default;
-    h4.active {
-      color: #03162e;
-    }
   }
 }
 
@@ -35,13 +42,12 @@ nav.nav-bar {
   align-items: center;
   width: 100%;
   flex-wrap: wrap;
-  box-shadow: inset 0px -2px 0px #e6e6e6;
   gap: 0.5rem;
   .nav-section {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #fff;
+    color: var(--inventory-nav-color);
     padding: 10px 10px;
     &.active-tab {
       color: var(--bs-warning);
@@ -91,7 +97,7 @@ nav.nav-bar {
   display: grid;
   width: 100%;
   height: 100%;
-  grid-template-columns: repeat(auto-fill, minmax(min(24rem, 100%), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(22rem, 100%), 1fr));
   grid-auto-rows: max-content;
   grid-auto-flow: row;
   border-radius: 5px;
@@ -106,6 +112,8 @@ nav.nav-bar {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    border: 2px solid #eee;
+    border-radius: 5px;
     .card-inventory-img {
       display: flex;
       width: 100%;
@@ -113,7 +121,6 @@ nav.nav-bar {
       align-items: center;
       justify-content: center;
       background-color: #fff;
-      border-radius: 8px;
       z-index: 2;
       img {
         display: flex;
@@ -132,8 +139,8 @@ nav.nav-bar {
       height: 100%;
       grid-template-columns: 100%;
       grid-template-rows: max-content 1fr max-content;
-      background-color: #444;
-      color: #eee;
+      background-color: var(--inventory-card-body-bg-color);
+      color: var(--inventory-card-body-color);
       border-radius: 0px 8px 8px 0px;
       &:hover {
         .card-inventory-footer {
@@ -178,8 +185,8 @@ nav.nav-bar {
           li {
             border: none !important;
             padding: 0px !important;
-            background-color: #444;
-            color: #eee;
+            background-color: var(--inventory-card-li-bg-color);
+            color: var(--inventory-card-li-color);
           }
         }
       }

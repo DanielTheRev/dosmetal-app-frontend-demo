@@ -4,6 +4,8 @@ import { IBuyOrder } from '../../interface/orden-compra.interface';
 import { BuyOrderStoreService } from '../../services/buy-order.store';
 
 import { HeadService } from '../../../../shared/services/Head.service';
+import { Page } from '../../../../interfaces/page';
+import { PaginationService } from '../../../../shared/services/pagination.service';
 
 @Component({
   selector: 'app-orden-list',
@@ -11,26 +13,15 @@ import { HeadService } from '../../../../shared/services/Head.service';
   styleUrls: ['./orden-list.component.scss'],
 })
 export class OrdenListComponent implements OnInit {
-  BuyOrders: {
-    isEmpty: boolean;
-    data: IBuyOrder[];
-  } = {
-    isEmpty: true,
-    data: [],
-  };
+  BuyOrders: IBuyOrder[] = [];
 
-  BuyOrdersFiltered: {
-    isEmpty: boolean;
-    data: IBuyOrder[];
-  } = {
-    isEmpty: true,
-    data: [],
-  };
+  Pages: Page<IBuyOrder>[] = [];
+  currentPage: Page<IBuyOrder> = this.Pages[0];
 
   constructor(
     private BuyOrderStore: BuyOrderStoreService,
     private Router: Router,
-    private Renderer2: Renderer2,
+    private PaginationService: PaginationService,
     private HeadService: HeadService,
     private NgZone: NgZone
   ) {
@@ -38,7 +29,8 @@ export class OrdenListComponent implements OnInit {
     this.BuyOrderStore.BuyOrders$.subscribe({
       next: (res) => {
         this.BuyOrders = res;
-        this.BuyOrdersFiltered = res;
+        this.Pages = this.PaginationService.paginateData(res);
+        this.currentPage = this.Pages[0];
       },
     });
   }
@@ -48,20 +40,15 @@ export class OrdenListComponent implements OnInit {
   searchBuyOrder(word: HTMLInputElement) {
     const value = word.value;
 
-    if (value.length <= 0) {
-      this.Renderer2.setProperty(word, 'value', '');
-      this.BuyOrdersFiltered = this.BuyOrders;
-      return;
-    }
-    const search = this.BuyOrders.data.filter(
+    if (value.length <= 0) return;
+
+    const search = this.BuyOrders.filter(
       (e) =>
         e.CompanyName.toLowerCase().startsWith(value.toLowerCase()) ||
         e.OrderNo.toString().startsWith(value)
     );
-    this.BuyOrdersFiltered = {
-      isEmpty: search.length <= 0,
-      data: search,
-    };
+    this.Pages = this.PaginationService.paginateData(search);
+    this.currentPage = this.Pages[0];
     return;
   }
 
@@ -80,5 +67,36 @@ export class OrdenListComponent implements OnInit {
 
   deleteBuyOrder(ID: string) {
     this.BuyOrderStore.deleteBuyOrder(ID);
+  }
+
+  nextPage() {
+    const pageNumber = this.currentPage.pageNumber + 1;
+    const page = this.PaginationService.nextPage<IBuyOrder>(
+      this.Pages,
+      pageNumber
+    );
+    if (!page) return;
+
+    this.currentPage = page;
+  }
+
+  setPage(pageNumber: number) {
+    const page = this.PaginationService.setPage<IBuyOrder>(
+      this.Pages,
+      pageNumber
+    );
+    if (!page) return;
+    this.currentPage = page;
+  }
+
+  previousPage() {
+    const pageNumber = this.currentPage.pageNumber - 1;
+    const page = this.PaginationService.previusPage<IBuyOrder>(
+      this.Pages,
+      pageNumber
+    );
+
+    if (!page) return;
+    this.currentPage = page;
   }
 }

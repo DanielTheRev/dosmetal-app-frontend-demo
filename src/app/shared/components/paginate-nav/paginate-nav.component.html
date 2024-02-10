@@ -1,0 +1,27 @@
+<nav class="overflow-auto">
+  <ul class="pagination">
+    <li
+      class="page-item"
+      [ngClass]="{ disabled: CurrentPage.pageNumber <= 1 }"
+      (click)="PreviousPage.emit()"
+    >
+      <a class="page-link user-select-none">Anterior</a>
+    </li>
+    <li class="page-item" *ngFor="let page of Pages">
+      <a
+        class="page-link user-select-none"
+        [ngClass]="{ active: CurrentPage.pageNumber === page.pageNumber }"
+        (click)="SetPage.emit({ pageNumber: page.pageNumber })"
+        >{{ page.pageNumber }}</a
+      >
+    </li>
+    <li
+      class="page-item"
+      [ngClass]="{ disabled: CurrentPage.pageNumber >= Pages.length }"
+    >
+      <a class="page-link user-select-none" (click)="NextPage.emit()"
+        >Siguiente</a
+      >
+    </li>
+  </ul>
+</nav>

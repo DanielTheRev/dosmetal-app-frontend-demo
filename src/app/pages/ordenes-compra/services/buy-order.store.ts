@@ -8,13 +8,7 @@ import { BuyOrderNotificationService } from './notification.service';
   providedIn: 'root',
 })
 export class BuyOrderStoreService {
-  private readonly _BuyOrderSource = new BehaviorSubject<{
-    isEmpty: boolean;
-    data: IBuyOrder[];
-  }>({
-    isEmpty: true,
-    data: [],
-  });
+  private readonly _BuyOrderSource = new BehaviorSubject<IBuyOrder[]>([]);
 
   readonly BuyOrders$ = this._BuyOrderSource.asObservable();
 
@@ -23,7 +17,7 @@ export class BuyOrderStoreService {
     private BuyOrderNotification: BuyOrderNotificationService
   ) {
     this.BuyOrderService.getAllOrders().subscribe({
-      next: (res) => this.setBuyOrders(res),
+      next: (res) => this.setBuyOrders(res.data),
     });
   }
 
@@ -31,8 +25,8 @@ export class BuyOrderStoreService {
     return this._BuyOrderSource.value;
   }
 
-  private setBuyOrders(data: { isEmpty: boolean; data: IBuyOrder[] }) {
-    data.data.sort((a, b) => {
+  private setBuyOrders(data: IBuyOrder[]) {
+    data.sort((a, b) => {
       if (a.OrderNo < b.OrderNo) return 1;
       return -1;
     });
@@ -43,11 +37,8 @@ export class BuyOrderStoreService {
   AddBuyOrder(BuyOrder: IBuyOrder) {
     this.BuyOrderService.createOrder(BuyOrder).subscribe({
       next: (value) => {
-        const newData = [value.order, ...this.getBuyOrdersValue().data]
-        this.setBuyOrders({
-          isEmpty: newData.length <= 0,
-          data: newData,
-        });
+        const newData = [value.order, ...this.getBuyOrdersValue()];
+        this.setBuyOrders(newData);
       },
       error: (error) => {
         console.log(error);
@@ -56,7 +47,7 @@ export class BuyOrderStoreService {
   }
 
   getBuyOrder(ID: string) {
-    const buyOrder = this.getBuyOrdersValue().data.find((e) => e._id === ID);
+    const buyOrder = this.getBuyOrdersValue().find((e) => e._id === ID);
 
     return buyOrder!;
   }
@@ -66,14 +57,11 @@ export class BuyOrderStoreService {
       if (result.isConfirmed) {
         this.BuyOrderService.deleteBuyOrder(ID).subscribe({
           next: (res) => {
-            const newData = this.getBuyOrdersValue().data.filter(
+            const newData = this.getBuyOrdersValue().filter(
               (e) => e._id !== ID
             );
 
-            const newBuyOrderArr: { isEmpty: boolean; data: IBuyOrder[] } = {
-              isEmpty: newData.length <= 0,
-              data: newData,
-            };
+            const newBuyOrderArr = newData;
             this.setBuyOrders(newBuyOrderArr);
           },
           error: (error) => console.log(error.error.message),

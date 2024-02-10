@@ -8,7 +8,7 @@ const routes: Routes = [
     canActivate: [RedirectToLogingGuard],
     children: [
       {
-        path: 'clients',
+        path: 'clientes',
         canActivate: [RedirectToLogingGuard],
         loadChildren: () =>
           import('./clients/clients.module').then((m) => m.ClientsModule),
@@ -51,7 +51,7 @@ const routes: Routes = [
       },
       {
         path: '**',
-        redirectTo: 'clients',
+        redirectTo: 'clientes',
       },
     ],
   },

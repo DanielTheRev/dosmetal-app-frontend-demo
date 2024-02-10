@@ -1,0 +1,31 @@
+<aside class="sidebar">
+  <div class="brand">
+    <img src="assets/dosmetal-logo.svg" />
+  </div>
+  <div class="user-info">
+    {{ userName.Gender === "male" ? "Bienvenido" : "Bienvenida" }},<br />
+    {{ userName.Name }}
+  </div>
+  <nav class="navigation" #burgerMenu>
+    <ul>
+      <li
+        [routerLinkActive]="route.routerLinkActive"
+        *ngFor="let route of routes"
+        [routerLink]="route.routerLink"
+        style="cursor: default"
+      >
+        <i [class]="route.icon"></i>
+        <a>
+          {{ route.name }}
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <div id="spacer" style="height: 50px"></div>
+  <div class="log-out">
+    <button (click)="logOut()">
+      <i class="fa-solid fa-right-from-bracket"></i>
+      <span>Cerrar Sesión</span>
+    </button>
+  </div>
+</aside>

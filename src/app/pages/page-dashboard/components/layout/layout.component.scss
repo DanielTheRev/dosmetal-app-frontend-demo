@@ -1,4 +1,3 @@
-@import '../../../../../variables.scss';
 
 :host {
   display: flex;
@@ -6,8 +5,8 @@
   height: 100%;
   flex-direction: column;
   padding-bottom: 0.5rem;
-  color: #333;
-  background: $ActivePageBG;
+  color: var(--page-color);
+  background: var(--page-bg-color);
   overflow: hidden;
 }
 
@@ -16,34 +15,4 @@
   width: 100%;
   height: 100%;
   overflow: auto;
-}
-
-.navbar {
-  position: sticky;
-  display: flex;
-  width: 100%;
-  justify-content: space-evenly;
-  gap: 1rem;
-  top: 0px;
-  left: 0px;
-  z-index: 5;
-  margin: 0px;
-  background-color: $ActivePageBG;
-  overflow: hidden;
-  li {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0.5rem;
-    padding-right: 1rem;
-    padding-left: 1rem;
-    border-radius: 5px;
-    overflow: hidden;
-    &.active {
-      background-color: #606c88;
-    }
-    a {
-      color: #fff;
-    }
-  }
 }

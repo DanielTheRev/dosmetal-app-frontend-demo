@@ -6,6 +6,7 @@
   align-items: center;
   flex-direction: column;
   overflow: hidden;
+  color: #333;
   background-image: linear-gradient(
     109.6deg,
     rgba(45, 116, 213, 1) 11.2%,
@@ -30,10 +31,7 @@
     flex-direction: column;
     justify-content: center;
     padding: 0.5rem;
-    .welcome { 
-      width: 100% !important;
-    }
-    .form { 
+    .form {
       flex-grow: 0 !important;
       padding: 1.5rem !important;
     }
@@ -48,14 +46,12 @@
     border-radius: 5px 0px 0 5px;
     align-content: center;
     align-items: center;
-    background-image: url('../../assets/home-loader-bg.jpg');
+    background-image: url("../../assets/home-loader-bg.jpg");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    h5 {
-      position: relative;
-      text-shadow: 1px 2px #333;
-      // font-size: 55px;
+    img {
+      width: 100%;
     }
   }
   .form {

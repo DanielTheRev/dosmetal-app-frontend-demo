@@ -1,3 +1,9 @@
+<header>
+  <h3>
+    {{ sectionActivated.section }}
+  </h3>
+</header>
+
 <button class="btn btn-sm btn-primary" id="add-btn" (click)="addProjectBTN()">
   {{ showAddView ? "Volver" : "Agregar" }}
 </button>
@@ -39,7 +45,12 @@
               >
                 Editar obra
               </button>
-              <button class="btn btn-danger btn-sm" (click)="deleteProject(project._id!)">Eliminar obra</button>
+              <button
+                class="btn btn-danger btn-sm"
+                (click)="deleteProject(project._id!)"
+              >
+                Eliminar obra
+              </button>
             </div>
           </div>
         </div>

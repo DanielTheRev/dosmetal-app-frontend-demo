@@ -4,7 +4,6 @@ import { environment } from '../../../../../environments/environment';
 import {
   IcartItem,
   IInventory,
-  IInventoryItem,
   ISuccessRetiro,
 } from '../../interfaces/stock.interface';
 
@@ -17,6 +16,8 @@ import { RetirarDialogComponent } from '../../components/retirar-dialog/retirar-
 import { CartItemsListDialogComponent } from '../../components/cart-items-list-dialog/cart-items-list-dialog.component';
 import { InventoryHistoryDialogComponent } from '../../components/inventory-history-dialog/inventory-history-dialog.component';
 import { Router } from '@angular/router';
+import { Page } from '../../../../interfaces/page';
+import { PaginationService } from '../../../../shared/services/pagination.service';
 
 @Component({
   selector: 'app-inventory-main-page',
@@ -27,7 +28,9 @@ export class InventoryMainPageComponent implements OnInit {
   tabs: string[] = ['Todo', 'Sin Stock', 'Pañol', 'Cajon cerrado'];
   activeTab: string = 'Todo';
   private Inventory: ReadonlyArray<IInventory> = [];
-  InventoryFiltered: IInventory[] = [];
+  Pages: Page<IInventory>[] = [];
+  currentPage = this.Pages[0];
+
   categories: string[] = [];
   cart: IcartItem[] = [];
 
@@ -38,15 +41,16 @@ export class InventoryMainPageComponent implements OnInit {
   constructor(
     private MatDialog: MatDialog,
     private InventoryStore: InventoryStoreService,
-    private InventoryService: InventoryService,
     private InventoryNotificationService: InventoryNotificationService,
+    private PaginationService: PaginationService,
     private Router: Router
   ) {}
 
   ngOnInit(): void {
     this.InventoryStore.inventory$.subscribe((res) => {
       this.Inventory = res;
-      this.InventoryFiltered = res;
+      this.Pages = this.PaginationService.paginateData(res);
+      this.currentPage = this.Pages[0];
       this.Inventory.forEach((e) => {
         if (!this.categories.includes(e.Categoria.rubro)) {
           this.categories.push(e.Categoria.rubro);
@@ -58,26 +62,31 @@ export class InventoryMainPageComponent implements OnInit {
   changeCategorie(categorie: string) {
     const categories: any = {
       Todo: () => {
-        this.InventoryFiltered = [...this.Inventory];
+        this.Pages = this.PaginationService.paginateData([...this.Inventory]);
+        this.currentPage = this.Pages[0];
         this.activeTab = 'Todo';
       },
       'Sin Stock': () => {
-        this.InventoryFiltered = this.Inventory.filter(
+        const finded = this.Inventory.filter(
           (e) => e.InventoryState == 'Sin Stock'
         );
+        this.Pages = this.PaginationService.paginateData(finded);
+        this.currentPage = this.Pages[0];
         this.activeTab = 'Sin Stock';
       },
       Pañol: () => {
         this.activeTab = categorie;
-        this.InventoryFiltered = this.Inventory.filter(
-          (e) => e.Ubicacion === 'Pañol'
-        );
+        const finded = this.Inventory.filter((e) => e.Ubicacion === 'Pañol');
+        this.Pages = this.PaginationService.paginateData(finded);
+        this.currentPage = this.Pages[0];
       },
       'Cajon cerrado': () => {
         this.activeTab = categorie;
-        this.InventoryFiltered = this.Inventory.filter(
+        const finded = this.Inventory.filter(
           (e) => e.Ubicacion === 'Cajon cerrado'
         );
+        this.Pages = this.PaginationService.paginateData(finded);
+        this.currentPage = this.Pages[0];
       },
     };
     categories[categorie]();
@@ -89,17 +98,21 @@ export class InventoryMainPageComponent implements OnInit {
 
   searchItem(name: string) {
     if (name.length <= 0 || name === undefined) {
-      this.InventoryFiltered = [...this.Inventory];
+      this.Pages = this.PaginationService.paginateData([...this.Inventory]);
+      this.currentPage = this.Pages[0];
       return;
     }
     name = name.toLowerCase();
 
-    this.InventoryFiltered = this.Inventory.filter(
+    const finded = this.Inventory.filter(
       (e) =>
         e.Nombre.toLowerCase().includes(name) ||
         e.Referencia.toLowerCase().includes(name) ||
         e.Categoria.rubro.toLocaleLowerCase().includes(name)
     );
+
+    this.Pages = this.PaginationService.paginateData(finded);
+    this.currentPage = this.Pages[0];
   }
 
   addInventory(itemID?: string) {
@@ -142,14 +155,14 @@ export class InventoryMainPageComponent implements OnInit {
           this.SaveRecoverItemCopyFromCart('retrieve');
 
         result.itemsToIgnore.forEach((item) => {
-          const itemIDX = this.InventoryFiltered.findIndex(
+          const itemIDX = this.Inventory.findIndex(
             (e) => e.Referencia === item.referencia
           );
           const itemBefore = CopyItemsFromCart.find(
             (f) => f.Referencia === item.referencia
           );
 
-          this.InventoryFiltered[itemIDX] = itemBefore!;
+          this.currentPage.data[itemIDX] = itemBefore!;
         });
       }
       if (result.status === null) return;
@@ -195,8 +208,6 @@ export class InventoryMainPageComponent implements OnInit {
       });
   }
 
-  async openExcel(file: HTMLInputElement) {}
-
   deleteItem(itemID: string) {
     this.InventoryStore.deleteInventory(itemID);
   }
@@ -231,5 +242,36 @@ export class InventoryMainPageComponent implements OnInit {
     this.MatDialog.open(InventoryHistoryDialogComponent, {
       data: InventoryID,
     });
+  }
+
+  nextPage() {
+    const pageNumber = this.currentPage.pageNumber + 1;
+    const page = this.PaginationService.nextPage<IInventory>(
+      this.Pages,
+      pageNumber
+    );
+    if (!page) return;
+
+    this.currentPage = page;
+  }
+
+  setPage(pageNumber: number) {
+    const page = this.PaginationService.setPage<IInventory>(
+      this.Pages,
+      pageNumber
+    );
+    if (!page) return;
+    this.currentPage = page;
+  }
+
+  previousPage() {
+    const pageNumber = this.currentPage.pageNumber - 1;
+    const page = this.PaginationService.previusPage<IInventory>(
+      this.Pages,
+      pageNumber
+    );
+
+    if (!page) return;
+    this.currentPage = page;
   }
 }

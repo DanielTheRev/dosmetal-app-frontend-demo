@@ -1,8 +1,8 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import jsPDF from 'jspdf';
-import { PreviewPresupuestoComponent } from './components/preview-presupuesto/preview-presupuesto.component';
 import { PdfService } from '../../../../../app/shared/services/pdf.service';
+import { PreviewPresupuestoComponent } from '../../components/preview-presupuesto/preview-presupuesto.component';
 
 @Component({
   selector: 'app-presupuestos-viewer',

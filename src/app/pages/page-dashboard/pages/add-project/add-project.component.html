@@ -16,6 +16,7 @@
       id="ProjectTitle"
       class="form-control"
       formControlName="ProjectTitle"
+      data-bs-theme="dark"
     />
   </div>
   <div class="ProjectDescription">
@@ -28,6 +29,7 @@
       class="form-control"
       formControlName="ProjectDescription"
       rows="10"
+      data-bs-theme="dark"
     ></textarea>
   </div>
   <div class="form-check">
@@ -37,6 +39,7 @@
       value=""
       id="flexCheckDefault"
       formControlName="isLastProject"
+      data-bs-theme="dark"
     />
     <label class="form-check-label" for="flexCheckDefault">
       Es el ultimo proyecto
@@ -50,11 +53,9 @@
       id="files"
       multiple
       (change)="loadImages($event)"
+      data-bs-theme="dark"
     />
   </div>
-  <!-- <div class="images-loader" *ngIf="localImages.length >= 0">
-    <i class="fas fa-spinner fa-spin"></i>
-  </div> -->
   <div class="images">
     <div class="img-container" *ngFor="let img of localImages">
       <img [src]="img.src" loading="lazy" />

@@ -16,15 +16,10 @@ import { InventoryItemComponent } from './components/inventory-item/inventory-it
 import { InventoryHistoryDialogComponent } from './components/inventory-history-dialog/inventory-history-dialog.component';
 import { PipesModule } from '../../shared/pipes/pipes.module';
 import { FormItemStockComponent } from './components/form-item-stock/form-item-stock.component';
-import { ToolsManagerPageComponent } from './pages/tools-manager-page/tools-manager-page.component';
-import { HerramientasPrestadaComponent } from './pages/tools-manager-page/sections/herramientas-prestada/herramientas-prestada.component';
-import { HerramientasComponent } from './pages/tools-manager-page/sections/herramientas/herramientas.component';
-import { HerramientasRotasComponent } from './pages/tools-manager-page/sections/herramientas-rotas/herramientas-rotas.component';
-import { ToolsManagerHeaderComponent } from './components/tools-manager-header/tools-manager-header.component';
-import { AddToolComponent } from './components/add-tool/add-tool.component';
 import { StockItemsHandlerComponent } from './components/stock-items-handler/stock-items-handler.component';
 import { PrintPageComponent } from './pages/report-main-page/pages/print-page/print-page.component';
 import { ReportComponent } from './pages/report-main-page/components/report/report.component';
+import { SharedComponentsModule } from 'src/app/shared/components/components.module';
 
 @NgModule({
   declarations: [
@@ -38,12 +33,6 @@ import { ReportComponent } from './pages/report-main-page/components/report/repo
     InventoryItemComponent,
     InventoryHistoryDialogComponent,
     FormItemStockComponent,
-    ToolsManagerPageComponent,
-    HerramientasPrestadaComponent,
-    HerramientasComponent,
-    HerramientasRotasComponent,
-    ToolsManagerHeaderComponent,
-    AddToolComponent,
     StockItemsHandlerComponent,
     PrintPageComponent,
     ReportComponent,
@@ -54,8 +43,9 @@ import { ReportComponent } from './pages/report-main-page/components/report/repo
     StockRoutingModule,
     ReactiveFormsModule,
     MaterialModule,
-    PipesModule
+    PipesModule,
+    SharedComponentsModule,
   ],
-  providers: []
+  providers: [],
 })
 export class StockModule {}

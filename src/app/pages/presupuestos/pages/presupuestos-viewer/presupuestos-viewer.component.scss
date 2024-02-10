@@ -5,10 +5,22 @@
   height: 100%;
   gap: 1rem;
   overflow: hidden;
+  --presupuesto-preview-bg-color: #444;
+  --presupuesto-preview-header-bg-color: #444;
+  --presupuesto-preview-header-color: #eee;
 }
+
+@media (prefers-color-scheme: light) {
+  :host {
+    --presupuesto-preview-bg-color: darkblue;
+    --presupuesto-preview-header-bg-color: darkblue;
+    --presupuesto-preview-header-color: #eee;
+  }
+}
+
 app-preview-presupuesto {
   min-width: 100%;
-  background: #333;
+  background: var(--presupuesto-preview-bg-color);
 }
 
 .pdf-view {
@@ -20,8 +32,8 @@ app-preview-presupuesto {
   header {
     display: flex;
     width: 100%;
-    background: rgb(82, 86, 89);
-    color: #fff;
+    background: var(--presupuesto-preview-header-bg-color);
+    color: var(--presupuesto-preview-header-color);
     padding: 0.5rem;
     justify-content: flex-start;
     align-items: center;

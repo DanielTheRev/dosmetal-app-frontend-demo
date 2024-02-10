@@ -11,7 +11,7 @@
       </div>
     </div>
 
-    <div class="obra-data" data-bs-theme="dark">
+    <div class="obra-data">
       <div class="inputs">
         <label for="obra" class="form-label">Titulo de la Obra</label>
         <input
@@ -100,7 +100,7 @@
     </button>
   </aside>
   <div class="table-wrapper">
-    <div class="count">
+    <div class="alert alert-primary count-alert" role="alert">
       <div class="sub-total">
         Subtotal:
         <span
@@ -136,7 +136,7 @@
       </div>
     </div>
     <div class="items-list">
-      <table class="table table-dark">
+      <table class="table">
         <thead>
           <tr>
             <td scope="col" style="width: 50px; text-align: center">Item</td>
@@ -177,7 +177,7 @@
               <input
                 type="text"
                 class="precio"
-                data-bs-theme="dark"
+              
                 #inputEl
                 (input)="InputPrecioChanges(i, inputEl.value)"
                 formControlName="Precio"
@@ -196,7 +196,7 @@
       </button>
     </div>
     <div class="footer">
-      <div class="nota alert alert-warning m-0" data-bs-theme="dark">
+      <div class="nota alert alert-warning m-0">
         Nota:
         <textarea
           class="form-control"

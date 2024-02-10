@@ -3,7 +3,7 @@ import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from './login/services/auth.service';
 import { AuthStoreService } from './login/services/auth.store.service';
-import { WebSocketService } from './shared/services/websocket.service';
+import { NotificationsService } from './shared/services/notifications.service';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +19,7 @@ export class AppComponent implements AfterViewInit {
     private AuthService: AuthService,
     private Router: Router,
     private AuthStore: AuthStoreService,
-    private WebSocketService: WebSocketService
+    private NotificationService: NotificationsService
   ) {}
 
   ngAfterViewInit(): void {
@@ -35,6 +35,9 @@ export class AppComponent implements AfterViewInit {
               () => {
                 this.AuthStore._setUser(res.user);
                 this.GoToHome = res.valid;
+                this.NotificationService.requestSuccessful(
+                  `Bienvenido de nuevo, ${res.user.Name}`
+                );
               }
             );
           }, 1000);
@@ -46,6 +49,9 @@ export class AppComponent implements AfterViewInit {
               this.appLoader.nativeElement.addEventListener(
                 'animationend',
                 () => {
+                  this.NotificationService.requestSuccessful(
+                    'Sesión expirada, vuelva a iniciar sesión'
+                  );
                   this.GoToHome = true;
                   this.Router.navigate(['auth']);
                 }
@@ -58,5 +64,22 @@ export class AppComponent implements AfterViewInit {
         },
       });
     }, 500);
+
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.setAttribute('data-bs-theme', 'dark');
+    } else {
+      document.documentElement.setAttribute('data-bs-theme', 'light');
+    }
+
+    window
+      .matchMedia('(prefers-color-scheme: dark)')
+      .addEventListener('change', (ev) => {
+        const { target } = ev as any;
+        if (target.matches) {
+          document.documentElement.setAttribute('data-bs-theme', 'dark');
+          return;
+        }
+        document.documentElement.setAttribute('data-bs-theme', 'light');
+      });
   }
 }
